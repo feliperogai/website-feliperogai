@@ -9,8 +9,30 @@ import type React from "react"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Felipe Rogai - Desenvolvedor Full Stack",
-  description: "Portfolio de desenvolvedor full stack mostrando projetos e habilidades",
+  title: "Felipe Rogai - Portfolio",
+  description: "Portfolio de desenvolvedor full stack mostrando projetos e habilidades em Python, React, AI/ML e desenvolvimento web",
+  keywords: ["Felipe Rogai", "Desenvolvedor Full Stack", "Python", "React", "AI", "Machine Learning", "Portfolio"],
+  authors: [{ name: "Felipe Rogai" }],
+  creator: "Felipe Rogai",
+  manifest: "/manifest.json",
+  openGraph: {
+    title: "Felipe Rogai - Portfolio",
+    description: "Portfolio de desenvolvedor full stack mostrando projetos e habilidades em Python, React, AI/ML e desenvolvimento web",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Felipe Rogai - Portfolio",
+    description: "Portfolio de desenvolvedor full stack mostrando projetos e habilidades em Python, React, AI/ML e desenvolvimento web",
+  },
+  icons: {
+    icon: [
+      { url: '/icon.png', sizes: '32x32', type: 'image/png' },
+      { url: '/rogai.jpg', sizes: 'any', type: 'image/jpeg' }
+    ],
+    shortcut: '/icon.png',
+    apple: '/apple-icon.png',
+  },
 }
 
 export default function RootLayout({

@@ -36,32 +36,32 @@ const technologies = [
 
 export default function TechStack() {
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+    <div className="grid gap-3 sm:gap-4 md:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
       {technologies.map((tech, index) => {
         const IconComponent = tech.icon
         return (
           <Card
             key={tech.category}
-            className="group p-4 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-border/30 hover:border-primary/40 bg-card/50 backdrop-blur-sm"
+            className="group p-3 sm:p-4 lg:p-6 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-border/30 hover:border-primary/40 bg-card/50 backdrop-blur-sm"
             style={{ animationDelay: `${index * 0.1}s` }}
           >
-            <div className="text-center mb-4">
+            <div className="text-center mb-3 sm:mb-4">
               <div
-                className={`inline-flex p-3 rounded-full bg-gradient-to-r ${tech.color} mb-3 group-hover:scale-105 transition-transform duration-300`}
+                className={`inline-flex p-2 sm:p-3 rounded-full bg-gradient-to-r ${tech.color} mb-2 sm:mb-3 group-hover:scale-105 transition-transform duration-300`}
               >
-                <IconComponent className="h-6 w-6 text-white" />
+                <IconComponent className="h-4 w-4 sm:h-6 sm:w-6 text-white" />
               </div>
-              <h3 className="text-lg font-semibold mb-3 text-foreground">{tech.category}</h3>
+              <h3 className="text-sm sm:text-base lg:text-lg font-semibold mb-2 sm:mb-3 text-foreground leading-tight">{tech.category}</h3>
             </div>
 
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-1.5 sm:gap-2">
               {tech.skills.map((skill, skillIndex) => (
                 <div
                   key={skill}
                   className="group/skill relative overflow-hidden rounded-md bg-muted/30 hover:bg-muted/50 transition-colors duration-200 border border-border/20"
                 >
-                  <div className="p-2 text-center">
-                    <span className="text-xs font-medium text-foreground group-hover/skill:text-primary transition-colors duration-200">
+                  <div className="p-1.5 sm:p-2 text-center">
+                    <span className="text-xs font-medium text-foreground group-hover/skill:text-primary transition-colors duration-200 leading-tight">
                       {skill}
                     </span>
                   </div>

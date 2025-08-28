@@ -45,7 +45,15 @@ export function useLanguage() {
   }, [])
 
   const t = (key: keyof typeof translations.en): string => {
-    return translations[language][key] || translations.en[key] || key
+    // Debug temporário
+    console.log('Translation requested for key:', key)
+    console.log('Current language:', language)
+    console.log('Available translations:', Object.keys(translations))
+    
+    const translation = translations[language][key] || translations.en[key] || key
+    console.log('Translation result:', translation)
+    
+    return translation
   }
 
   const changeLanguage = (newLanguage: Language) => {

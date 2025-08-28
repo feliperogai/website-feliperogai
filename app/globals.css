@@ -189,11 +189,43 @@
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
-/* Project cards alignment */
+/* Project cards alignment - Responsive Grid */
 .project-grid {
   display: grid;
-  gap: 1.5rem;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+
+/* Small screens (sm) */
+@media (min-width: 640px) {
+  .project-grid {
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}
+
+/* Medium screens (md) */
+@media (min-width: 768px) {
+  .project-grid {
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  }
+}
+
+/* Large screens (lg) */
+@media (min-width: 1024px) {
+  .project-grid {
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  }
+}
+
+/* Extra large screens (xl) */
+@media (min-width: 1280px) {
+  .project-grid {
+    gap: 2.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  }
 }
 
 .project-card {
@@ -230,4 +262,66 @@
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+/* Responsive container adjustments */
+@media (max-width: 640px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1023px) {
+  .container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Mobile-first responsive utilities */
+.mobile-only {
+  display: block;
+}
+
+.sm-up {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .mobile-only {
+    display: none;
+  }
+  
+  .sm-up {
+    display: block;
+  }
+}
+
+/* Touch-friendly button sizes for mobile */
+@media (max-width: 640px) {
+  button, 
+  [role="button"],
+  .btn {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Improved scrolling for mobile */
+@media (max-width: 640px) {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    -webkit-overflow-scrolling: touch;
+  }
 }

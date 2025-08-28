@@ -1,22 +1,33 @@
 'use client'
 
 import { Button } from "@/components/ui/button"
-import { Github, Linkedin, Mail, Twitter } from "lucide-react"
+import { Github, Linkedin, Mail, Instagram, Menu, X } from "lucide-react"
 import Link from "next/link"
 import ContactForm from "./components/contact-form"
 import ProjectCard from "./components/project-card"
 import TechStack from "./components/tech-stack"
 import ProfilePhoto from "./components/profile-photo"
 import { useLanguageContext } from "./contexts/LanguageContext"
+import { useState } from "react"
 
 export default function Page() {
   const { t } = useLanguageContext()
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   
   return (
     <div className="min-h-screen bg-background">
       <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
-        <div className="container flex h-16 items-center justify-center">
-          <nav className="flex items-center space-x-8 text-sm font-medium">
+        <div className="container flex h-16 items-center px-4 sm:px-6 lg:px-8">
+          {/* Botão Menu Mobile - À esquerda */}
+          <button
+            className="md:hidden p-2 rounded-lg hover:bg-muted/50 transition-colors"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
+
+          {/* Menu Desktop - Centralizado */}
+          <nav className="hidden md:flex items-center justify-center flex-1 space-x-4 lg:space-x-8 text-sm font-medium">
             {[
               { href: "#about", label: t("about") },
               { href: "#skills", label: t("skills") },
@@ -26,7 +37,7 @@ export default function Page() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="relative px-6 py-3 rounded-xl transition-all duration-300 hover:text-foreground hover:scale-105 group font-semibold"
+                className="relative px-4 lg:px-6 py-3 rounded-xl transition-all duration-300 hover:text-foreground hover:scale-105 group font-semibold"
               >
                 <span className="relative z-10 text-muted-foreground group-hover:text-foreground transition-colors duration-300">
                   {item.label}
@@ -35,7 +46,33 @@ export default function Page() {
               </Link>
             ))}
           </nav>
+
+          {/* Espaço vazio à direita para balancear o menu mobile */}
+          <div className="md:hidden w-10"></div>
         </div>
+
+        {/* Menu Mobile */}
+        {mobileMenuOpen && (
+          <div className="md:hidden border-t border-border/50 bg-background/95 backdrop-blur">
+            <nav className="container px-4 py-4 space-y-2">
+              {[
+                { href: "#about", label: t("about") },
+                { href: "#skills", label: t("skills") },
+                { href: "#projects", label: t("projects") },
+                { href: "#contact", label: t("contact") }
+              ].map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="block px-4 py-3 rounded-lg hover:bg-muted/50 transition-colors font-medium"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+          </div>
+        )}
       </header>
 
       <main className="container px-4 md:px-6">
@@ -62,10 +99,10 @@ export default function Page() {
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl">
                 {[
-                  { href: "https://github.com", icon: Github, label: t("github"), bgColor: "bg-gray-800", hoverBgColor: "hover:bg-gray-700", borderColor: "border-gray-600" },
-                  { href: "https://linkedin.com", icon: Linkedin, label: t("linkedin"), bgColor: "bg-blue-600", hoverBgColor: "hover:bg-blue-500", borderColor: "border-blue-500" },
-                  { href: "https://twitter.com", icon: Twitter, label: t("twitter"), bgColor: "bg-sky-500", hoverBgColor: "hover:bg-sky-400", borderColor: "border-sky-400" },
-                  { href: "mailto:hello@example.com", icon: Mail, label: t("email"), bgColor: "bg-emerald-600", hoverBgColor: "hover:bg-emerald-500", borderColor: "border-emerald-500" }
+                  { href: "https://github.com/feliperogai", icon: Github, label: t("github"), bgColor: "bg-gray-800", hoverBgColor: "hover:bg-gray-700", borderColor: "border-gray-600" },
+                  { href: "https://www.linkedin.com/in/feliperogai/", icon: Linkedin, label: t("linkedin"), bgColor: "bg-blue-600", hoverBgColor: "hover:bg-blue-500", borderColor: "border-blue-500" },
+                  { href: "https://www.instagram.com/feliperogai/", icon: Instagram, label: t("instagram"), bgColor: "bg-pink-600", hoverBgColor: "hover:bg-pink-500", borderColor: "border-pink-500" },
+                  { href: "mailto:feliperogai@hotmail.com", icon: Mail, label: t("email"), bgColor: "bg-emerald-600", hoverBgColor: "hover:bg-emerald-500", borderColor: "border-emerald-500" }
                 ].map((item, index) => {
                   const IconComponent = item.icon;
                   return (
@@ -253,13 +290,13 @@ export default function Page() {
                 {t("footerDescription")}
               </p>
               <div className="flex gap-3">
-                <Link href="https://github.com" target="_blank" className="p-2 bg-muted/50 hover:bg-muted rounded-lg transition-colors duration-300 group">
+                <Link href="https://github.com/feliperogai" target="_blank" className="p-2 bg-muted/50 hover:bg-muted rounded-lg transition-colors duration-300 group">
                   <Github className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
                 </Link>
-                <Link href="https://linkedin.com" target="_blank" className="p-2 bg-muted/50 hover:bg-muted rounded-lg transition-colors duration-300 group">
+                <Link href="https://www.linkedin.com/in/feliperogai/" target="_blank" className="p-2 bg-muted/50 hover:bg-muted rounded-lg transition-colors duration-300 group">
                   <Linkedin className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
                 </Link>
-                <Link href="mailto:hello@example.com" className="p-2 bg-muted/50 hover:bg-muted rounded-lg transition-colors duration-300 group">
+                <Link href="mailto:feliperogai@hotmail.com" className="p-2 bg-muted/50 hover:bg-muted rounded-lg transition-colors duration-300 group">
                   <Mail className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
                 </Link>
               </div>
@@ -269,16 +306,16 @@ export default function Page() {
             <div className="space-y-4">
               <h4 className="text-lg font-semibold text-foreground">{t("quickLinks")}</h4>
               <nav className="space-y-2">
-                <Link href="#about" className="block text-sm text-muted-foreground hover:text-primary transition-colors duration-300">
+                <Link href="#about" className="block w-fit text-sm text-muted-foreground hover:text-primary transition-colors duration-300">
                   {t("aboutMe")}
                 </Link>
-                <Link href="#skills" className="block text-sm text-muted-foreground hover:text-primary transition-colors duration-300">
+                <Link href="#skills" className="block w-fit text-sm text-muted-foreground hover:text-primary transition-colors duration-300">
                   {t("skills")}
                 </Link>
-                <Link href="#projects" className="block text-sm text-muted-foreground hover:text-primary transition-colors duration-300">
+                <Link href="#projects" className="block w-fit text-sm text-muted-foreground hover:text-primary transition-colors duration-300">
                   {t("projects")}
                 </Link>
-                <Link href="#contact" className="block text-sm text-muted-foreground hover:text-primary transition-colors duration-300">
+                <Link href="#contact" className="block w-fit text-sm text-muted-foreground hover:text-primary transition-colors duration-300">
                   {t("contact")}
                 </Link>
               </nav>
