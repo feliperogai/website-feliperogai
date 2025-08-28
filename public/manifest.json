@@ -1,0 +1,27 @@
+{
+  "name": "Felipe Rogai - Portfolio",
+  "short_name": "Felipe Rogai",
+  "description": "Portfolio de desenvolvedor full stack mostrando projetos e habilidades em Python, React, AI/ML e desenvolvimento web",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#d97706",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/rogai.jpg",
+      "sizes": "any",
+      "type": "image/jpeg"
+    }
+  ]
+}
+
