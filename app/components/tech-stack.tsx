@@ -10,7 +10,7 @@ const technologies = [
   },
   {
     category: "Frontend Development",
-    skills: ["React", "Next.js", "TypeScript", "JavaScript", "HTML", "CSS"],
+    skills: ["React", "Next", "TypeScript", "JavaScript", "HTML", "CSS"],
     icon: Code,
     color: "from-blue-500 to-cyan-500",
   },

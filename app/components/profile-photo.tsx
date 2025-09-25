@@ -4,11 +4,21 @@ import Image from 'next/image'
 import { useState } from 'react'
 
 interface ProfilePhotoProps {
-  src?: string
-  alt?: string
-  size?: 'sm' | 'md' | 'lg' | 'xl'
-  showPlaceholder?: boolean
-  className?: string
+  readonly src?: string
+  readonly alt?: string
+  readonly size?: 'sm' | 'md' | 'lg' | 'xl'
+  readonly showPlaceholder?: boolean
+  readonly className?: string
+}
+
+function getSizeText(size: 'sm' | 'md' | 'lg' | 'xl'): string {
+  switch (size) {
+    case 'sm': return '80x80px'
+    case 'md': return '128x128px'
+    case 'lg': return '400x400px'
+    case 'xl': return '512x512px'
+    default: return '400x400px'
+  }
 }
 
 export default function ProfilePhoto({ 
@@ -48,7 +58,7 @@ export default function ProfilePhoto({
           src={src}
           alt={alt}
           fill
-          className="object-cover"
+          className="object-contain object-center"
           onError={() => setImageError(true)}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -62,8 +72,8 @@ export default function ProfilePhoto({
         <div className="text-center text-muted-foreground px-2">
           <div className={`${iconSizes[size]} mb-1 sm:mb-2`}>📸</div>
           <div className={`font-medium ${textSizes[size]} leading-tight`}>Sua Foto Aqui</div>
-          <div className={`opacity-70 ${size === 'sm' ? 'text-xs' : 'text-xs sm:text-sm'} leading-tight`}>
-            {size === 'sm' ? '80x80px' : size === 'md' ? '128x128px' : size === 'lg' ? '400x400px' : '512x512px'}
+          <div className={`opacity-70 text-xs sm:text-sm leading-tight`}>
+            {getSizeText(size)}
           </div>
         </div>
       </div>

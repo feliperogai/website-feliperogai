@@ -6,25 +6,41 @@ import Link from "next/link"
 import { useLanguageContext } from "../contexts/LanguageContext"
 
 interface ProjectCardProps {
-  title: string
-  description: string
-  image: string
-  link: string
-  tags: string[]
+  readonly title: string
+  readonly description: string
+  readonly image: string
+  readonly link: string
+  readonly tags: string[]
+  readonly showPlayButton?: boolean
+  readonly playLink?: string
+  readonly playButtonText?: string
 }
 
-export default function ProjectCard({ title, description, image, link, tags }: ProjectCardProps) {
+export default function ProjectCard({ title, description, image, link, tags, showPlayButton = false, playLink, playButtonText = "Jogar Agora" }: ProjectCardProps) {
   const { t } = useLanguageContext()
   
   return (
     <Card className="project-card overflow-hidden h-full">
-      <div className="relative aspect-video sm:aspect-[16/10]">
+      <div className="relative aspect-video sm:aspect-[16/10] group">
         <Image
           src={image || "/placeholder.svg"}
           alt={title}
           fill
           className="object-cover transition-transform hover:scale-105"
         />
+        {showPlayButton && playLink && (
+          <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+            <Link href={playLink} target="_blank">
+              <Button
+                size="sm"
+                className="bg-white/90 hover:bg-white text-gray-900 hover:text-gray-900 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
+              >
+                <ExternalLink className="h-4 w-4 mr-2" />
+                {playButtonText}
+              </Button>
+            </Link>
+          </div>
+        )}
       </div>
       <CardContent className="project-card-content p-3 sm:p-4 lg:p-6">
         <h3 className="font-semibold text-lg sm:text-xl lg:text-2xl mb-2 sm:mb-3 line-clamp-2 min-h-[3rem] sm:min-h-[3.5rem] lg:min-h-[4rem] leading-tight">{title}</h3>

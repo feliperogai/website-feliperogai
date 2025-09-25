@@ -1,6 +1,6 @@
 # Felipe Rogai - Portfolio Website
 
-Um portfolio moderno e responsivo desenvolvido com Next.js, TypeScript e Tailwind CSS.
+Um portfolio moderno e responsivo desenvolvido com Next, TypeScript e Tailwind CSS.
 
 ## ✨ Características
 
@@ -13,7 +13,7 @@ Um portfolio moderno e responsivo desenvolvido com Next.js, TypeScript e Tailwin
 
 ## 🚀 Tecnologias Utilizadas
 
-- **Frontend**: Next.js 14, React 18, TypeScript
+- **Frontend**: Next, React, TypeScript
 - **Estilização**: Tailwind CSS com configurações personalizadas
 - **Componentes**: Shadcn/ui para componentes base
 - **Ícones**: Lucide React
@@ -114,7 +114,7 @@ npm run build
 
 ```
 website/
-├── app/                    # App Router do Next.js
+├── app/                    # App Router do Next
 │   ├── components/        # Componentes React
 │   ├── contexts/          # Contextos (idioma, tema)
 │   ├── i18n/             # Traduções
