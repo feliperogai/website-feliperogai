@@ -7,6 +7,7 @@ import ContactForm from "./components/contact-form"
 import ProjectCard from "./components/project-card"
 import TechStack from "./components/tech-stack"
 import ProfilePhoto from "./components/profile-photo"
+import TypewriterTitle from "./components/typewriter-title"
 import { useLanguageContext } from "./contexts/LanguageContext"
 import { useState } from "react"
 
@@ -81,19 +82,31 @@ export default function Page() {
             <div className="flex flex-col items-center justify-center space-y-8 text-center">
               <div className="space-y-6">
                 <div className="relative">
-                  <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl/none text-foreground animate-bounce-gentle">
+                  <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl/none text-foreground">
                     {t("heroTitle").includes("Felipe Rogai") ? (
                       <>
                         {t("heroTitle").split("Felipe Rogai")[0]}
-                        <span className="text-primary font-bold">Felipe Rogai</span>
+                        <TypewriterTitle 
+                          text="Felipe Rogai"
+                          className="text-primary font-bold"
+                          speed={100}
+                          eraseSpeed={50}
+                          pauseTime={2000}
+                        />
                         {t("heroTitle").split("Felipe Rogai")[1]}
                       </>
                     ) : (
-                      t("heroTitle")
+                      <TypewriterTitle 
+                        text={t("heroTitle")}
+                        className="text-foreground"
+                        speed={80}
+                        eraseSpeed={40}
+                        pauseTime={3000}
+                      />
                     )}
                   </h1>
                 </div>
-                <p className="mx-auto max-w-[800px] text-foreground md:text-xl animate-float leading-relaxed">
+                <p className="mx-auto max-w-[800px] text-foreground md:text-xl leading-relaxed">
                   {t("heroSubtitle")}
                 </p>
               </div>
@@ -147,7 +160,7 @@ export default function Page() {
                         <div className="flex justify-center">
                           <ProfilePhoto
                             size="lg"
-                            src="/feliperogai.jpeg"
+                            src="/feliperogai.png"
                             showPlaceholder={false}
                           />
                         </div>
@@ -165,11 +178,11 @@ export default function Page() {
                             <div className="text-xs text-muted-foreground font-medium leading-tight">{t("yearsExperience")}</div>
                           </div>
                           <div className="text-center">
-                            <div className="text-xl lg:text-2xl font-bold text-secondary">15+</div>
+                            <div className="text-xl lg:text-2xl font-bold text-secondary">8+</div>
                             <div className="text-xs text-muted-foreground font-medium leading-tight">{t("projectsCompleted")}</div>
                           </div>
                           <div className="text-center">
-                            <div className="text-xl lg:text-2xl font-bold text-accent">5+</div>
+                            <div className="text-xl lg:text-2xl font-bold text-accent">13+</div>
                             <div className="text-xs text-muted-foreground font-medium leading-tight">{t("technologies")}</div>
                           </div>
                         </div>
@@ -219,29 +232,37 @@ export default function Page() {
                 {t("projectsSubtitle")}
               </p>
             </div>
-            <div className="project-grid">
-              <ProjectCard
-                title={t("project1Title")}
-                description={t("project1Description")}
-                image="/ai-automation-dashboard.png"
-                link="https://github.com"
-                tags={["Python", "AI", "Machine Learning", "Process Automation"]}
-              />
-              <ProjectCard
-                title={t("project2Title")}
-                description={t("project2Description")}
-                image="/workflow-optimizer.png"
-                link="https://github.com"
-                tags={["Python", "TensorFlow", "Data Analysis", "API Integration"]}
-              />
-              <ProjectCard
-                title={t("project3Title")}
-                description={t("project3Description")}
-                image="/colorful-pokemon-pokedex.png"
-                link="https://github.com"
-                tags={["JavaScript", "React", "AI", "PokéAPI"]}
-              />
-            </div>
+             <div className="project-grid">
+               <ProjectCard
+                 title={t("project2Title")}
+                 description={t("project2Description")}
+                 image="/onsmart.png"
+                 link="https://github.com"
+                 tags={["React", "CMS", "Excel API", "YouTube API", "Formspree", "AI Agent"]}
+                 showPlayButton={true}
+                 playLink="https://onsmart.ai/"
+                 playButtonText="Visitar Site"
+               />
+               <ProjectCard
+                 title={t("project3Title")}
+                 description={t("project3Description")}
+                 image="/pokédex.png"
+                 link="https://github.com/feliperogai/pokedex.git"
+                 tags={["HTML", "CSS", "JavaScript", "PokéAPI", "GitHub Pages"]}
+                 showPlayButton={true}
+                 playLink="https://feliperogai.github.io/pokedex/"
+                 playButtonText="Ver Pokédex"
+               />
+               <ProjectCard
+                 title={t("project4Title")}
+                 description={t("project4Description")}
+                 image="/stopgame.png"
+                 link="https://github.com/feliperogai/stop"
+                 tags={["Next", "TypeScript", "PostgreSQL", "Tailwind CSS", "Node"]}
+                 showPlayButton={true}
+                 playLink="https://stop-nine.vercel.app/"
+               />
+             </div>
           </div>
         </section>
 
