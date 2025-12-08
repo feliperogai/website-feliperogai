@@ -3,57 +3,49 @@
 import { useState, useEffect } from 'react'
 import { Language, translations } from '../i18n/translations'
 
-// Países de língua portuguesa
-const portugueseCountries = ['BR', 'PT', 'AO', 'MZ', 'GW', 'CV', 'ST', 'TL', 'MO']
-// Países de língua espanhola
-const spanishCountries = ['ES', 'MX', 'AR', 'CO', 'PE', 'VE', 'CL', 'EC', 'GT', 'CU', 'BO', 'DO', 'HN', 'PY', 'SV', 'NI', 'CR', 'PA', 'UY', 'GQ']
-
 export function useLanguage() {
-  const [language, setLanguage] = useState<Language>('en')
+  const [language, setLanguage] = useState<Language>('pt')
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    const detectLanguage = async () => {
-      try {
-        // Tentar obter o país do usuário via API
-        const response = await fetch('https://ipapi.co/json/')
-        const data = await response.json()
-        
-        if (data.country_code) {
-          const countryCode = data.country_code
-          
-          if (portugueseCountries.includes(countryCode)) {
-            setLanguage('pt')
-          } else if (spanishCountries.includes(countryCode)) {
-            setLanguage('es')
-          } else {
-            setLanguage('en')
-          }
-        } else {
-          // Fallback para inglês se não conseguir detectar
-          setLanguage('en')
-        }
-      } catch (error) {
-        console.log('Could not detect country, defaulting to English')
-        setLanguage('en')
-      } finally {
-        setIsLoading(false)
+    const detectFromNavigator = (): Language => {
+      if (typeof navigator === 'undefined') return 'pt'
+
+      const mapToLanguage = (lang?: string): Language | null => {
+        if (!lang) return null
+        const normalized = lang.toLowerCase()
+        if (normalized.startsWith('pt')) return 'pt'
+        if (normalized.startsWith('es')) return 'es'
+        return 'en' // fallback for any other language
       }
+
+      const browserLanguages =
+        Array.isArray(navigator.languages) && navigator.languages.length > 0
+          ? navigator.languages
+          : navigator.language
+            ? [navigator.language]
+            : []
+
+      for (const lang of browserLanguages) {
+        const detected = mapToLanguage(lang)
+        if (detected) return detected
+      }
+
+      return 'pt'
     }
 
-    detectLanguage()
+    setLanguage(detectFromNavigator())
+    setIsLoading(false)
   }, [])
 
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.documentElement.lang = language
+    }
+  }, [language])
+
   const t = (key: keyof typeof translations.en): string => {
-    // Debug temporário
-    console.log('Translation requested for key:', key)
-    console.log('Current language:', language)
-    console.log('Available translations:', Object.keys(translations))
-    
-    const translation = translations[language][key] || translations.en[key] || key
-    console.log('Translation result:', translation)
-    
-    return translation
+    return translations[language][key] || translations.en[key] || key
   }
 
   const changeLanguage = (newLanguage: Language) => {
