@@ -5,6 +5,7 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
 import type React from "react"
+import ChatWidget from "./components/chat-widget"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -42,10 +43,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR" suppressHydrationWarning>
-      <body className={cn("min-h-screen bg-background font-sans antialiased", inter.className)}>
+      <body suppressHydrationWarning className={cn("min-h-screen bg-background font-sans antialiased", inter.className)}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <LanguageProvider>
             {children}
+            <ChatWidget />
           </LanguageProvider>
         </ThemeProvider>
       </body>
