@@ -38,11 +38,13 @@ export async function POST(req: Request) {
 
   const userMessage = String(body.message).slice(0, 2000)
 
+  type HistoryCandidate = { role?: unknown; content?: unknown }
+
   const history: ChatMessage[] = Array.isArray(body.history)
-    ? body.history
+    ? (body.history as HistoryCandidate[])
         .filter(
-          (item) =>
-            item &&
+          (item): item is { role: ChatMessage['role']; content: string } =>
+            !!item &&
             (item.role === 'user' || item.role === 'assistant') &&
             typeof item.content === 'string'
         )
