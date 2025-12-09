@@ -177,19 +177,20 @@ export default function ChatWidget() {
         </div>
       )}
 
-      <button
-        hidden={isOpen}
-        onClick={() => setIsOpen((prev) => !prev)}
-        className={cn(
-          'relative flex items-center gap-2 rounded-full px-4 py-3 shadow-lg text-primary-foreground',
-          'bg-primary hover:bg-primary/90 transition-all duration-300 ease-out',
-          !isOpen && 'animate-pulse'
-        )}
-        aria-label={t('chatOpenButton')}
-      >
-        <MessageCircle className="h-5 w-5" />
-        <span className="text-sm font-semibold">{t('chatOpenButton')}</span>
-      </button>
+      {!isOpen && (
+        <button
+          onClick={() => setIsOpen(true)}
+          className={cn(
+            'relative flex items-center gap-2 rounded-full px-4 py-3 shadow-lg text-primary-foreground',
+            'bg-primary hover:bg-primary/90 transition-all duration-300 ease-out',
+            'animate-pulse'
+          )}
+          aria-label={t('chatOpenButton')}
+        >
+          <MessageCircle className="h-5 w-5" />
+          <span className="text-sm font-semibold">{t('chatOpenButton')}</span>
+        </button>
+      )}
     </div>
   )
 }
