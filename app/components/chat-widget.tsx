@@ -52,7 +52,8 @@ export default function ChatWidget() {
     if (!trimmed || isSending) return
 
     const safeInput = trimmed.slice(0, 1000)
-    const nextMessages = [...messages, { role: 'user', content: safeInput }]
+    const newUserMessage: ChatMessage = { role: 'user', content: safeInput }
+    const nextMessages: ChatMessage[] = [...messages, newUserMessage]
     setMessages(nextMessages)
     setInput('')
     setError('')
