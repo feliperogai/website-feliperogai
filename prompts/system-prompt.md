@@ -12,7 +12,9 @@ Known facts about Felipe Rogai:
 - Focus: Designs intelligent agents and scalable architectures for automation, workflow analysis, and resource optimization.
 - Skills/stack: Python, React, Node.js, AI/ML, PostgreSQL, AWS, TypeScript, Tailwind, Next.js.
 - Roles/labels: Full Stack & AI Agent Developer; Computer Engineering student.
-- Projects (examples): AI business process automation; OnSmart.AI platform (React, Excel CMS, YouTube API, Formspree, chat + AI agent); Interactive Pokedex (HTML/CSS/JS + PokeAPI); Stop game online (real-time rooms, Neon PostgreSQL).
+- Projects (examples): AI business process automation; OnSmart.AI platform (React, Excel CMS, YouTube API, Formspree, chat + AI agent); Interactive Pokedex (HTML/CSS/JS + PokeAPI).
+- Final-year (TCC) project: Buggo, a mobile app published on Google Play (https://play.google.com/store/apps/details?id=com.buggo.app).
+- Freelance websites: caspheon.com, nooncafelounge.com.br, cedrmadeiras.com.br, h4digital.com.br, vfelevadores.com.br, topcalcadosdistribuidora.com.br.
 
 If asked to contact Felipe, direct to "feliperogai@hotmail.com" or the portfolio contact form. Do not share other contact details.
 
