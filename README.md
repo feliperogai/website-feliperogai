@@ -33,6 +33,18 @@ npm run start
 npm run lint
 ```
 
+## Projetos
+Os projetos ficam em `app/data/projects.ts`: para adicionar um novo, basta incluir um item na lista certa.
+
+Os cards dos sites de clientes usam um preview ao vivo (mShots) até existir um screenshot local. Para gerar screenshots fixos:
+
+```bash
+npm i -D playwright && npx playwright install chromium
+npm run screenshots   # salva em public/projects/ e atualiza app/data/screenshots.json
+```
+
+Para usar uma imagem própria no app Buggo, salve-a como `public/projects/buggo.jpg` e rode `npm run screenshots`. O script também registra imagens adicionadas manualmente.
+
 ## Estrutura
 ```
 app/               # App Router

@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button"
 import { Github, Linkedin, Mail, Instagram, Menu, X } from "lucide-react"
 import Link from "next/link"
 import ContactForm from "./components/contact-form"
-import ProjectCard from "./components/project-card"
+import ProjectCard, { FeaturedAppCard, NextProjectCard } from "./components/project-card"
+import { tccApp, freelanceProjects, personalProjects } from "./data/projects"
 import TechStack from "./components/tech-stack"
 import ProfilePhoto from "./components/profile-photo"
 import TypewriterTitle from "./components/typewriter-title"
@@ -178,7 +179,7 @@ export default function Page() {
                             <div className="text-xs text-muted-foreground font-medium leading-tight">{t("yearsExperience")}</div>
                           </div>
                           <div className="text-center">
-                            <div className="text-xl lg:text-2xl font-bold text-secondary">8+</div>
+                            <div className="text-xl lg:text-2xl font-bold text-secondary">10+</div>
                             <div className="text-xs text-muted-foreground font-medium leading-tight">{t("projectsCompleted")}</div>
                           </div>
                           <div className="text-center">
@@ -232,37 +233,30 @@ export default function Page() {
                 {t("projectsSubtitle")}
               </p>
             </div>
-             <div className="project-grid">
-               <ProjectCard
-                 title={t("project2Title")}
-                 description={t("project2Description")}
-                 image="/onsmart.png"
-                 link="https://github.com"
-                 tags={["React", "CMS", "Excel API", "YouTube API", "Formspree", "AI Agent"]}
-                 showPlayButton={true}
-                 playLink="https://onsmart.ai/"
-                 playButtonText="Visitar Site"
-               />
-               <ProjectCard
-                 title={t("project3Title")}
-                 description={t("project3Description")}
-                 image="/pokédex.png"
-                 link="https://github.com/feliperogai/pokedex.git"
-                 tags={["HTML", "CSS", "JavaScript", "PokéAPI", "GitHub Pages"]}
-                 showPlayButton={true}
-                 playLink="https://feliperogai.github.io/pokedex/"
-                 playButtonText="Ver Pokédex"
-               />
-               <ProjectCard
-                 title={t("project4Title")}
-                 description={t("project4Description")}
-                 image="/stopgame.png"
-                 link="https://github.com/feliperogai/stop"
-                 tags={["Next", "TypeScript", "PostgreSQL", "Tailwind CSS", "Node"]}
-                 showPlayButton={true}
-                 playLink="https://stop-nine.vercel.app/"
-               />
-             </div>
+            <div className="mx-auto max-w-6xl space-y-16">
+              <FeaturedAppCard project={tccApp} />
+
+              <div>
+                <h3 className="mb-2 text-2xl font-bold tracking-tight md:text-3xl">{t("projectsFreelanceTitle")}</h3>
+                <p className="mb-8 text-muted-foreground">{t("projectsFreelanceSubtitle")}</p>
+                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  {freelanceProjects.map((project) => (
+                    <ProjectCard key={project.slug} project={project} />
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h3 className="mb-2 text-2xl font-bold tracking-tight md:text-3xl">{t("projectsPersonalTitle")}</h3>
+                <p className="mb-8 text-muted-foreground">{t("projectsPersonalSubtitle")}</p>
+                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  {personalProjects.map((project) => (
+                    <ProjectCard key={project.slug} project={project} />
+                  ))}
+                  <NextProjectCard />
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
