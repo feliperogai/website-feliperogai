@@ -1,4 +1,4 @@
-// Gera screenshots dos sites de clientes em public/projects/<slug>.jpg e
+// Gera screenshots dos sites em public/projects/<slug>.jpg e
 // registra os slugs em app/data/screenshots.json (lido por app/data/projects.ts).
 //
 // Uso:
@@ -15,6 +15,8 @@ const sites = {
   h4digital: "https://h4digital.com.br",
   vfelevadores: "https://vfelevadores.com.br",
   topcalcados: "https://topcalcadosdistribuidora.com.br",
+  onsmart: "https://onsmart.ai/",
+  pokedex: "https://feliperogai.github.io/pokedex/",
 }
 
 const outDir = join(process.cwd(), "public", "projects")

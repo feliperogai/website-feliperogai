@@ -36,7 +36,7 @@ npm run lint
 ## Projetos
 Os projetos ficam em `app/data/projects.ts`: para adicionar um novo, basta incluir um item na lista (e a descrição em `app/i18n/translations.ts`).
 
-Os cards dos sites usam um preview ao vivo (mShots) até existir um screenshot local. Para gerar screenshots fixos:
+Os cards dos projetos web usam um preview ao vivo (mShots) até existir um screenshot local. Para gerar screenshots fixos:
 
 ```bash
 npm i -D playwright && npx playwright install chromium
