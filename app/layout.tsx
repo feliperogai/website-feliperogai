@@ -1,39 +1,35 @@
 import { ThemeProvider } from "./components/theme-provider"
 import { LanguageProvider } from "./contexts/LanguageContext"
-import { cn } from "@/lib/utils"
-import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import type { Metadata, Viewport } from "next"
+import "@fontsource-variable/inter"
+import "@fontsource-variable/jetbrains-mono"
+import "@fontsource/instrument-serif/400.css"
+import "@fontsource/instrument-serif/400-italic.css"
 import "./globals.css"
 import type React from "react"
 import ChatWidget from "./components/chat-widget"
 
-const inter = Inter({ subsets: ["latin"] })
+const title = "Felipe Rogai — Engenheiro de Software, IA & Web"
+const description =
+  "Engenheiro da computação e desenvolvedor full stack. Crio sites, aplicativos e agentes de IA do design ao deploy."
 
 export const metadata: Metadata = {
-  title: "Felipe Rogai - Portfolio",
-  description: "Portfolio de desenvolvedor full stack mostrando projetos e habilidades em Python, React, AI/ML e desenvolvimento web",
-  keywords: ["Felipe Rogai", "Desenvolvedor Full Stack", "Python", "React", "AI", "Machine Learning", "Portfolio"],
+  metadataBase: new URL(
+    process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "http://localhost:3000",
+  ),
+  title,
+  description,
+  keywords: ["Felipe Rogai", "Desenvolvedor Full Stack", "Engenheiro de Software", "Agentes de IA", "Next.js", "React", "Python", "Portfólio"],
   authors: [{ name: "Felipe Rogai" }],
   creator: "Felipe Rogai",
   manifest: "/manifest.json",
-  openGraph: {
-    title: "Felipe Rogai - Portfolio",
-    description: "Portfolio de desenvolvedor full stack mostrando projetos e habilidades em Python, React, AI/ML e desenvolvimento web",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Felipe Rogai - Portfolio",
-    description: "Portfolio de desenvolvedor full stack mostrando projetos e habilidades em Python, React, AI/ML e desenvolvimento web",
-  },
-  icons: {
-    icon: [
-      { url: '/icon.png', sizes: '32x32', type: 'image/png' },
-      { url: '/rogai.jpg', sizes: 'any', type: 'image/jpeg' }
-    ],
-    shortcut: '/icon.png',
-    apple: '/apple-icon.png',
-  },
+  openGraph: { title, description, type: "website", locale: "pt_BR" },
+  twitter: { card: "summary_large_image", title, description },
+}
+
+export const viewport: Viewport = {
+  themeColor: "#0B0B0E",
+  colorScheme: "dark",
 }
 
 export default function RootLayout({
@@ -42,9 +38,9 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="pt-BR" suppressHydrationWarning>
-      <body suppressHydrationWarning className={cn("min-h-screen bg-background font-sans antialiased", inter.className)}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+    <html lang="pt-BR" className="dark" suppressHydrationWarning>
+      <body suppressHydrationWarning className="min-h-screen bg-background font-sans antialiased">
+        <ThemeProvider attribute="class" forcedTheme="dark" defaultTheme="dark" disableTransitionOnChange>
           <LanguageProvider>
             {children}
             <ChatWidget />

@@ -1,12 +1,11 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { useState } from "react"
 import { useLanguageContext } from "../contexts/LanguageContext"
-import { CheckCircle, Send } from "lucide-react"
+import { ArrowUpRight, CheckCircle } from "lucide-react"
 
 export default function ContactForm() {
   const { t } = useLanguageContext()
@@ -49,9 +48,9 @@ export default function ContactForm() {
 
   if (success) {
     return (
-      <Card className="p-8 sm:p-12 lg:p-16 text-center">
+      <div className="rounded-3xl border border-border bg-card p-8 text-center sm:p-12">
         <div className="animate-zoom-in">
-          <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-6 animate-bounce" />
+          <CheckCircle className="mx-auto mb-6 h-14 w-14 text-primary" />
           <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground mb-4">
             {t("messageSent")}
           </h3>
@@ -66,15 +65,15 @@ export default function ContactForm() {
             {t("sendNewMessage")}
           </Button>
         </div>
-      </Card>
+      </div>
     )
   }
 
   return (
-    <Card className="p-4 sm:p-6 lg:p-8">
-      <form action={handleSubmit} className="space-y-3 sm:space-y-4 lg:space-y-6">
+    <div className="rounded-3xl border border-border bg-card p-6 sm:p-8">
+      <form action={handleSubmit} className="space-y-5">
         <div>
-          <label htmlFor="name" className="block text-sm font-medium mb-1.5 sm:mb-2">
+          <label htmlFor="name" className="mb-2 block font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
             {t("name")}
           </label>
           <Input 
@@ -82,11 +81,11 @@ export default function ContactForm() {
             name="name" 
             placeholder={t("enterYourName")} 
             required 
-            className="h-10 sm:h-11 lg:h-12 text-sm sm:text-base"
+            className="h-12 rounded-xl bg-background text-base focus-visible:ring-primary"
           />
         </div>
         <div>
-          <label htmlFor="email" className="block text-sm font-medium mb-1.5 sm:mb-2">
+          <label htmlFor="email" className="mb-2 block font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
             {t("email")}
           </label>
           <Input 
@@ -95,11 +94,11 @@ export default function ContactForm() {
             type="email" 
             placeholder={t("enterYourEmail")} 
             required 
-            className="h-10 sm:h-11 lg:h-12 text-sm sm:text-base"
+            className="h-12 rounded-xl bg-background text-base focus-visible:ring-primary"
           />
         </div>
         <div>
-          <label htmlFor="message" className="block text-sm font-medium mb-1.5 sm:mb-2">
+          <label htmlFor="message" className="mb-2 block font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
             {t("message")}
           </label>
           <Textarea 
@@ -107,12 +106,12 @@ export default function ContactForm() {
             name="message" 
             placeholder={t("enterYourMessage")} 
             required 
-            className="min-h-[80px] sm:min-h-[100px] lg:min-h-[120px] text-sm sm:text-base resize-none"
+            className="min-h-[140px] resize-none rounded-xl bg-background text-base focus-visible:ring-primary"
           />
         </div>
         <Button 
           type="submit" 
-          className="w-full h-10 sm:h-11 lg:h-12 text-sm sm:text-base font-medium group transition-all duration-300 hover:scale-105" 
+          className="group h-12 w-full rounded-full text-base font-semibold" 
           disabled={pending}
         >
           {pending ? (
@@ -122,8 +121,8 @@ export default function ContactForm() {
             </div>
           ) : (
             <div className="flex items-center gap-2">
-              <Send className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
               {t("sendMessage")}
+              <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </div>
           )}
         </Button>
@@ -135,6 +134,6 @@ export default function ContactForm() {
           </div>
         )}
       </form>
-    </Card>
+    </div>
   )
 }

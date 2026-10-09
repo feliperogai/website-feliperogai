@@ -3,9 +3,9 @@
 Portfólio pessoal moderno e responsivo desenvolvido em Next.js, TypeScript e Tailwind CSS, com deploy contínuo na Vercel.
 
 ## Destaques
-- Tema claro/escuro com design elegante
+- Design editorial escuro com identidade própria
 - Experiência mobile-first e breakpoints completos
-- Conteúdo em português e inglês via Context API
+- Conteúdo em português, inglês e espanhol, com seletor de idioma
 - Animações leves, SEO e performance otimizadas
 - Componentes baseados em shadcn/ui e ícones Lucide
 
@@ -34,16 +34,19 @@ npm run lint
 ```
 
 ## Projetos
-Os projetos ficam em `app/data/projects.ts`: para adicionar um novo, basta incluir um item na lista certa.
+Os projetos ficam em `app/data/projects.ts`: para adicionar um novo, basta incluir um item na lista (e a descrição em `app/i18n/translations.ts`).
 
-Os cards dos sites de clientes usam um preview ao vivo (mShots) até existir um screenshot local. Para gerar screenshots fixos:
+Os cards dos sites usam um preview ao vivo (mShots) até existir um screenshot local. Para gerar screenshots fixos:
 
 ```bash
 npm i -D playwright && npx playwright install chromium
 npm run screenshots   # salva em public/projects/ e atualiza app/data/screenshots.json
 ```
 
-Para usar uma imagem própria no app Buggo, salve-a como `public/projects/buggo.jpg` e rode `npm run screenshots`. O script também registra imagens adicionadas manualmente.
+## Identidade visual
+- Paleta: tinta `#0B0B0E`, papel `#F4F1EA` e laranja sinal `#FF5B1F`
+- Tipografia: Inter (texto), Instrument Serif itálico (destaques) e JetBrains Mono (rótulos), servidas localmente via Fontsource
+- Logo/favicon: monograma "fr" com cursor de terminal (`app/icon.svg`), também usado em `app/components/logo.tsx`
 
 ## Estrutura
 ```

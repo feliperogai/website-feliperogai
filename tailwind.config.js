@@ -67,6 +67,11 @@ module.exports = {
           foreground: "hsl(var(--card-foreground))",
         },
       },
+      fontFamily: {
+        sans: ['"Inter Variable"', "ui-sans-serif", "system-ui", "sans-serif"],
+        serif: ['"Instrument Serif"', "ui-serif", "Georgia", "serif"],
+        mono: ['"JetBrains Mono Variable"', "ui-monospace", "SFMono-Regular", "monospace"],
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
@@ -93,6 +98,8 @@ module.exports = {
         '9xl': ['8rem', { lineHeight: '1' }],
       },
       animation: {
+        'marquee': 'marquee 40s linear infinite',
+        'blink': 'blink 1.1s steps(1) infinite',
         'bounce-gentle': 'bounce-gentle 2s ease-in-out infinite',
         'float': 'float 6s ease-in-out infinite',
         'slide-in-left': 'slideInLeft 0.8s ease-out',
@@ -105,6 +112,14 @@ module.exports = {
         'slide-in-from-bottom': 'slideInFromBottom 0.5s ease-out',
       },
       keyframes: {
+        'marquee': {
+          'from': { transform: 'translateX(0)' },
+          'to': { transform: 'translateX(-50%)' },
+        },
+        'blink': {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0' },
+        },
         'bounce-gentle': {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-10px)' },
