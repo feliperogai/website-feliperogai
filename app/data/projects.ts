@@ -49,7 +49,7 @@ export const projects: Project[] = [
     categories: ["web", "ai"],
     tags: ["React", "AI Agent", "CMS", "YouTube API"],
     liveUrl: "https://onsmart.ai/",
-    image: "/onsmart.webp",
+    image: sitePreview("onsmart", "https://onsmart.ai/"),
     featured: true,
   },
   site("caspheon", "Caspheon", "https://caspheon.com", "caspheonDescription", ["Web Design", "UI/UX", "SEO"]),
@@ -66,6 +66,6 @@ export const projects: Project[] = [
     tags: ["JavaScript", "PokéAPI", "CSS"],
     liveUrl: "https://feliperogai.github.io/pokedex/",
     githubUrl: "https://github.com/feliperogai/pokedex",
-    image: "/pokedex.webp",
+    image: sitePreview("pokedex", "https://feliperogai.github.io/pokedex/"),
   },
 ]
