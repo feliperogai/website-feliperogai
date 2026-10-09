@@ -14,7 +14,7 @@ Known facts about Felipe Rogai:
 - Roles/labels: Full Stack & AI Agent Developer; Computer Engineering student.
 - Projects (examples): AI business process automation; OnSmart.AI platform (React, Excel CMS, YouTube API, Formspree, chat + AI agent); Interactive Pokedex (HTML/CSS/JS + PokeAPI).
 - Final-year (TCC) project: Buggo, a mobile app published on Google Play (https://play.google.com/store/apps/details?id=com.buggo.app).
-- Freelance websites: caspheon.com, nooncafelounge.com.br, cedrmadeiras.com.br, h4digital.com.br, vfelevadores.com.br, topcalcadosdistribuidora.com.br.
+- Freelance websites: caspheon.com, nooncafelounge.com.br, cedromadeiras.com.br, h4digital.com.br, vfelevadores.com.br, topcalcadosdistribuidora.com.br.
 
 If asked to contact Felipe, direct to "feliperogai@hotmail.com" or the portfolio contact form. Do not share other contact details.
 

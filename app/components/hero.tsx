@@ -98,14 +98,13 @@ export default function Hero() {
         {/* Retrato */}
         <div className="relative mx-auto w-full max-w-md lg:col-span-5 lg:max-w-none">
           <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] bg-primary">
-            <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/25 to-transparent" />
             <Image
-              src="/felipe-rogai.webp"
+              src="/felipe-rogai-portrait.webp"
               alt="Felipe Rogai"
               fill
               priority
               sizes="(min-width: 1024px) 40vw, 90vw"
-              className="object-cover object-bottom"
+              className="object-cover object-[50%_35%]"
             />
           </div>
 
