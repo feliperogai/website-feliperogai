@@ -40,8 +40,8 @@ function About() {
             <SectionHeading index="01" label={t("about")} title={t("aboutHeading")} emphasis={t("aboutHeadingEmphasis")} />
             <Reveal delay={100} className="mt-10 rounded-3xl border border-border bg-card p-6">
               <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">{t("nowLabel")}</p>
-              <p className="mt-3 text-lg font-semibold">{t("aiDevelopmentIntern")}</p>
-              <p className="mt-1 text-sm text-muted-foreground">{t("computerEngineeringStudent")}</p>
+              <p className="mt-3 text-lg font-semibold">{t("roleTitle")}</p>
+              <p className="mt-1 text-sm text-muted-foreground">{t("degree")}</p>
             </Reveal>
           </div>
         </div>
@@ -77,9 +77,9 @@ function About() {
 function Services() {
   const { t } = useLanguageContext()
   const services = [
+    { icon: Bot, title: "service3Title", text: "service3Text" },
     { icon: Globe, title: "service1Title", text: "service1Text" },
     { icon: Smartphone, title: "service2Title", text: "service2Text" },
-    { icon: Bot, title: "service3Title", text: "service3Text" },
     { icon: Layers, title: "service4Title", text: "service4Text" },
   ] as const
 
