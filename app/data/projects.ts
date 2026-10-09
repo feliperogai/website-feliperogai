@@ -14,7 +14,6 @@ export interface Project {
   readonly image?: string
   /** Logo exibido no mockup de celular (projetos mobile). */
   readonly logo?: string
-  readonly featured?: boolean
 }
 
 // Screenshots locais gerados por `npm run screenshots` (scripts/capture-screenshots.mjs).
@@ -37,27 +36,11 @@ export const projects: Project[] = [
     title: "Buggo",
     descriptionKey: "buggoDescription",
     categories: ["mobile"],
-    tags: ["Android", "Mobile", "Google Play"],
+    tags: ["Android", "Mobile", "Gamificação"],
     liveUrl: "https://play.google.com/store/apps/details?id=com.buggo.app",
-    logo: "https://play-lh.googleusercontent.com/LCiXfeXcQIU6hU9ftrOpNDKEzAgFATuAzRvZO3odeO1ev0f91bIDSO6F1UISTLl2ndTvZ7XWjL4eLBhqMzlh3g=w240-h480-rw",
-    featured: true,
+    githubUrl: "https://github.com/feliperogai/buggo-app",
+    logo: "/projects/buggo-logo.webp",
   },
-  {
-    slug: "onsmart",
-    title: "OnSmart.AI",
-    descriptionKey: "onsmartDescription",
-    categories: ["web", "ai"],
-    tags: ["React", "AI Agent", "CMS", "YouTube API"],
-    liveUrl: "https://onsmart.ai/",
-    image: sitePreview("onsmart", "https://onsmart.ai/"),
-    featured: true,
-  },
-  site("caspheon", "Caspheon", "https://caspheon.com", "caspheonDescription", ["Web Design", "UI/UX", "SEO"]),
-  site("nooncafelounge", "Noon Café Lounge", "https://nooncafelounge.com.br", "noonDescription", ["Web Design", "Responsivo", "SEO"]),
-  site("cedromadeiras", "Cedro Madeiras", "https://cedromadeiras.com.br", "cedroDescription", ["Web Design", "Catálogo", "SEO"]),
-  site("h4digital", "H4 Digital", "https://h4digital.com.br", "h4Description", ["Web Design", "Conversão", "SEO"]),
-  site("vfelevadores", "VF Elevadores", "https://vfelevadores.com.br", "vfDescription", ["Web Design", "Responsivo", "SEO"]),
-  site("topcalcados", "Top Calçados", "https://topcalcadosdistribuidora.com.br", "topCalcadosDescription", ["Web Design", "Catálogo", "Responsivo"]),
   {
     slug: "pokedex",
     title: "Pokédex",
@@ -68,4 +51,32 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/feliperogai/pokedex",
     image: sitePreview("pokedex", "https://feliperogai.github.io/pokedex/"),
   },
+  {
+    slug: "chorao-eterno",
+    title: "Chorão Eterno",
+    descriptionKey: "choraoDescription",
+    categories: ["web"],
+    tags: ["Homenagem", "Web Design", "GitHub Pages"],
+    liveUrl: "https://feliperogai.github.io/chorao-eterno/",
+    githubUrl: "https://github.com/feliperogai/chorao-eterno",
+    image: sitePreview("chorao-eterno", "https://feliperogai.github.io/chorao-eterno/"),
+  },
+  {
+    slug: "onsmart",
+    title: "OnSmart.AI",
+    descriptionKey: "onsmartDescription",
+    categories: ["web", "ai"],
+    tags: ["React", "AI Agent", "CMS", "YouTube API"],
+    liveUrl: "https://onsmart.ai/",
+    image: sitePreview("onsmart", "https://onsmart.ai/"),
+  },
+  {
+    ...site("topcalcados", "Top Calçados", "https://topcalcadosdistribuidora.com.br", "topCalcadosDescription", ["IA", "Web Design", "Catálogo"]),
+    categories: ["web", "ai"],
+  },
+  site("caspheon", "Caspheon", "https://caspheon.com", "caspheonDescription", ["Web Design", "UI/UX", "SEO"]),
+  site("nooncafelounge", "Noon Café Lounge", "https://nooncafelounge.com.br", "noonDescription", ["Web Design", "Responsivo", "SEO"]),
+  site("cedromadeiras", "Cedro Madeiras", "https://cedromadeiras.com.br", "cedroDescription", ["Web Design", "Catálogo", "SEO"]),
+  site("h4digital", "H4 Digital", "https://h4digital.com.br", "h4Description", ["Web Design", "Conversão", "SEO"]),
+  site("vfelevadores", "VF Elevadores", "https://vfelevadores.com.br", "vfDescription", ["Web Design", "Responsivo", "SEO"]),
 ]

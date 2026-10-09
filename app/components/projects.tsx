@@ -70,28 +70,34 @@ function BrowserMedia({ project }: { project: Project }) {
 
 function PhoneMedia({ project }: { project: Project }) {
   const initial = (
-    <div className="flex h-24 w-24 items-center justify-center rounded-[1.75rem] bg-primary text-5xl font-bold text-primary-foreground">
+    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary text-3xl font-bold text-primary-foreground">
       {project.title[0]}
     </div>
   )
 
+  // Mesma moldura e proporção dos cards de site, com o celular "saindo" de baixo
   return (
-    <div className="relative flex h-full min-h-[360px] items-center justify-center overflow-hidden rounded-2xl border border-border bg-gradient-to-br from-primary/30 via-primary/5 to-transparent">
-      <div className="bg-grid absolute inset-0" />
-      <div className="absolute h-64 w-64 rounded-full bg-primary/30 blur-3xl" />
-      <div className="relative h-[330px] w-[165px] -rotate-6 rounded-[2.2rem] border-[7px] border-foreground/90 bg-background shadow-2xl transition-transform duration-500 group-hover:rotate-0 group-hover:scale-105">
-        <div className="absolute left-1/2 top-2 h-3.5 w-12 -translate-x-1/2 rounded-full bg-foreground/90" />
-        <div className="flex h-full flex-col items-center justify-center gap-4 rounded-[1.7rem] bg-gradient-to-b from-card to-background">
-          <SafeImage
-            src={project.logo}
-            alt={`${project.title} logo`}
-            className="h-24 w-24 rounded-[1.75rem] object-cover shadow-lg"
-            fallback={initial}
-          />
-          <span className="text-xl font-semibold tracking-tight">{project.title}</span>
-          <span className="rounded-full bg-foreground px-3 py-1 font-mono text-[9px] uppercase tracking-widest text-background">
-            Google Play
-          </span>
+    <div className="relative h-full overflow-hidden rounded-2xl border border-border bg-muted">
+      <div className="flex items-center gap-1.5 border-b border-border bg-background/70 px-3 py-2">
+        <span className="h-2 w-2 rounded-full bg-foreground/20" />
+        <span className="h-2 w-2 rounded-full bg-foreground/20" />
+        <span className="h-2 w-2 rounded-full bg-foreground/20" />
+        <span className="ml-2 truncate font-mono text-[10px] text-muted-foreground">Google Play</span>
+      </div>
+      <div className="relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-primary/35 via-primary/10 to-card">
+        <div className="bg-grid absolute inset-0" />
+        <div className="absolute left-1/2 top-1/2 h-48 w-48 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/30 blur-3xl" />
+        <div className="absolute left-1/2 top-[14%] h-[150%] w-[38%] min-w-[120px] -translate-x-1/2 -rotate-6 rounded-[1.8rem] border-[6px] border-foreground/90 bg-background shadow-2xl transition-transform duration-500 group-hover:-translate-y-2 group-hover:rotate-0">
+          <div className="absolute left-1/2 top-1.5 h-2.5 w-10 -translate-x-1/2 rounded-full bg-foreground/90" />
+          <div className="flex h-full flex-col items-center gap-2.5 rounded-[1.4rem] bg-gradient-to-b from-card to-background pt-[22%]">
+            <SafeImage
+              src={project.logo}
+              alt={`${project.title} logo`}
+              className="h-14 w-14 rounded-2xl object-cover shadow-lg"
+              fallback={initial}
+            />
+            <span className="text-base font-semibold tracking-tight">{project.title}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -178,7 +184,6 @@ export default function Projects() {
   const [filter, setFilter] = useState<Filter>("all")
 
   const visible = filter === "all" ? projects : projects.filter((p) => p.categories.includes(filter))
-  const showAll = filter === "all"
 
   return (
     <section id="work" className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8">
@@ -216,13 +221,13 @@ export default function Projects() {
         </Reveal>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-6 lg:gap-5">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
         {visible.map((project, i) => (
-          <Reveal key={project.slug} delay={(i % 3) * 80} className={`h-full ${showAll && project.featured ? "sm:col-span-2 lg:col-span-3" : "lg:col-span-2"}`}>
+          <Reveal key={project.slug} delay={(i % 3) * 80} className="h-full">
             <ProjectTile project={project} index={projects.indexOf(project)} />
           </Reveal>
         ))}
-        <Reveal className={`h-full ${showAll ? "lg:col-span-4" : "lg:col-span-2"}`}>
+        <Reveal className="h-full">
           <NextProjectTile />
         </Reveal>
       </div>
