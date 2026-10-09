@@ -99,10 +99,11 @@ export default function Hero() {
         <div className="relative mx-auto w-full max-w-md lg:col-span-5 lg:max-w-none">
           <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] bg-primary">
             <Image
-              src="/felipe-rogai-hero.webp"
+              src="/felipe-rogai-portrait-hq.webp"
               alt="Felipe Rogai"
               fill
               priority
+              unoptimized
               sizes="(min-width: 1024px) 40vw, 90vw"
               className="object-cover object-[50%_60%]"
             />
