@@ -12,8 +12,10 @@ export interface Project {
   readonly liveUrl?: string
   readonly githubUrl?: string
   readonly image?: string
-  /** Logo exibido no mockup de celular (projetos mobile). */
+  /** Logo exibido no card de projetos mobile. */
   readonly logo?: string
+  /** Cor de fundo do logo, para preencher o card sem emendas. */
+  readonly logoBackground?: string
 }
 
 // Screenshots locais gerados por `npm run screenshots` (scripts/capture-screenshots.mjs).
@@ -40,6 +42,7 @@ export const projects: Project[] = [
     liveUrl: "https://play.google.com/store/apps/details?id=com.buggo.app",
     githubUrl: "https://github.com/feliperogai/buggo-app",
     logo: "/projects/buggo-logo.webp",
+    logoBackground: "#1E0146",
   },
   {
     slug: "pokedex",
