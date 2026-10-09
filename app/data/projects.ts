@@ -54,7 +54,7 @@ export const projects: Project[] = [
   },
   site("caspheon", "Caspheon", "https://caspheon.com", "caspheonDescription", ["Web Design", "UI/UX", "SEO"]),
   site("nooncafelounge", "Noon Café Lounge", "https://nooncafelounge.com.br", "noonDescription", ["Web Design", "Responsivo", "SEO"]),
-  site("cedrmadeiras", "CEDR Madeiras", "https://cedrmadeiras.com.br", "cedrDescription", ["Web Design", "Catálogo", "SEO"]),
+  site("cedromadeiras", "Cedro Madeiras", "https://cedromadeiras.com.br", "cedroDescription", ["Web Design", "Catálogo", "SEO"]),
   site("h4digital", "H4 Digital", "https://h4digital.com.br", "h4Description", ["Web Design", "Conversão", "SEO"]),
   site("vfelevadores", "VF Elevadores", "https://vfelevadores.com.br", "vfDescription", ["Web Design", "Responsivo", "SEO"]),
   site("topcalcados", "Top Calçados", "https://topcalcadosdistribuidora.com.br", "topCalcadosDescription", ["Web Design", "Catálogo", "Responsivo"]),

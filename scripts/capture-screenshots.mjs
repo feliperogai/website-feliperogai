@@ -11,7 +11,7 @@ import { join } from "node:path"
 const sites = {
   caspheon: "https://caspheon.com",
   nooncafelounge: "https://nooncafelounge.com.br",
-  cedrmadeiras: "https://cedrmadeiras.com.br",
+  cedromadeiras: "https://cedromadeiras.com.br",
   h4digital: "https://h4digital.com.br",
   vfelevadores: "https://vfelevadores.com.br",
   topcalcados: "https://topcalcadosdistribuidora.com.br",
