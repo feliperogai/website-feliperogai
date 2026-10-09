@@ -9,9 +9,9 @@ import "./globals.css"
 import type React from "react"
 import ChatWidget from "./components/chat-widget"
 
-const title = "Felipe Rogai — Engenheiro de Software, IA & Web"
+const title = "Felipe Rogai — Engenheiro da Computação · Full Stack & IA"
 const description =
-  "Engenheiro da computação e desenvolvedor full stack. Crio sites, aplicativos e agentes de IA do design ao deploy."
+  "Engenheiro da computação e desenvolvedor full stack com foco em IA. Crio agentes de IA, automações, sites e aplicativos do design ao deploy."
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   ),
   title,
   description,
-  keywords: ["Felipe Rogai", "Desenvolvedor Full Stack", "Engenheiro de Software", "Agentes de IA", "Next.js", "React", "Python", "Portfólio"],
+  keywords: ["Felipe Rogai", "Desenvolvedor Full Stack", "Engenheiro de Software", "Agentes de IA", "Inteligência Artificial", "Engenheiro da Computação", "Next.js", "React", "Python", "Portfólio"],
   authors: [{ name: "Felipe Rogai" }],
   creator: "Felipe Rogai",
   manifest: "/manifest.json",

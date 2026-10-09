@@ -12,7 +12,7 @@ const socials = [
 ]
 
 const marquee = [
-  "Next.js", "React", "TypeScript", "Python", "Node.js", "AI Agents", "LangChain", "OpenAI API",
+  "AI Agents", "LangChain", "OpenAI API", "Python", "Next.js", "React", "TypeScript", "Node.js",
   "PostgreSQL", "FastAPI", "Tailwind CSS", "AWS", "Docker", "Mobile", "SEO",
 ]
 
