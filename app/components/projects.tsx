@@ -68,14 +68,8 @@ function BrowserMedia({ project }: { project: Project }) {
   )
 }
 
-function PhoneMedia({ project }: { project: Project }) {
-  const initial = (
-    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary text-3xl font-bold text-primary-foreground">
-      {project.title[0]}
-    </div>
-  )
-
-  // Mesma moldura e proporção dos cards de site, com o celular "saindo" de baixo
+/** Card de app: mostra o logo inteiro sobre a cor de fundo do próprio logo. */
+function AppMedia({ project }: { project: Project }) {
   return (
     <div className="relative h-full overflow-hidden rounded-2xl border border-border bg-muted">
       <div className="flex items-center gap-1.5 border-b border-border bg-background/70 px-3 py-2">
@@ -84,21 +78,17 @@ function PhoneMedia({ project }: { project: Project }) {
         <span className="h-2 w-2 rounded-full bg-foreground/20" />
         <span className="ml-2 truncate font-mono text-[10px] text-muted-foreground">Google Play</span>
       </div>
-      <div className="relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-primary/35 via-primary/10 to-card">
-        <div className="bg-grid absolute inset-0" />
-        <div className="absolute left-1/2 top-1/2 h-48 w-48 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/30 blur-3xl" />
-        <div className="absolute left-1/2 top-[14%] h-[150%] w-[38%] min-w-[120px] -translate-x-1/2 -rotate-6 rounded-[1.8rem] border-[6px] border-foreground/90 bg-background shadow-2xl transition-transform duration-500 group-hover:-translate-y-2 group-hover:rotate-0">
-          <div className="absolute left-1/2 top-1.5 h-2.5 w-10 -translate-x-1/2 rounded-full bg-foreground/90" />
-          <div className="flex h-full flex-col items-center gap-2.5 rounded-[1.4rem] bg-gradient-to-b from-card to-background pt-[22%]">
-            <SafeImage
-              src={project.logo}
-              alt={`${project.title} logo`}
-              className="h-14 w-14 rounded-2xl object-cover shadow-lg"
-              fallback={initial}
-            />
-            <span className="text-base font-semibold tracking-tight">{project.title}</span>
-          </div>
-        </div>
+      <div className="relative aspect-[16/10] overflow-hidden" style={{ backgroundColor: project.logoBackground }}>
+        <SafeImage
+          src={project.logo}
+          alt={`${project.title} logo`}
+          className="h-full w-full object-contain transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+          fallback={
+            <div className="flex h-full w-full items-center justify-center bg-primary text-6xl font-bold text-primary-foreground">
+              {project.title[0]}
+            </div>
+          }
+        />
       </div>
     </div>
   )
@@ -115,7 +105,7 @@ function ProjectTile({ project, index }: { project: Project; index: number }) {
       className="spotlight group flex h-full flex-col rounded-3xl border border-border bg-card p-3 transition-colors duration-300 hover:border-foreground/25"
     >
       <Link href={href} target="_blank" rel="noopener noreferrer" className="block flex-1" aria-label={project.title}>
-        {isMobile ? <PhoneMedia project={project} /> : <BrowserMedia project={project} />}
+        {isMobile ? <AppMedia project={project} /> : <BrowserMedia project={project} />}
       </Link>
 
       <div className="flex flex-1 flex-col px-3 pb-3 pt-5">
