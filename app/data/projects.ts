@@ -1,14 +1,20 @@
 import type { TranslationKey } from "../i18n/translations"
 import screenshots from "./screenshots.json"
 
+export type ProjectCategory = "web" | "mobile" | "ai"
+
 export interface Project {
   readonly slug: string
   readonly title: string
   readonly descriptionKey: TranslationKey
+  readonly categories: ProjectCategory[]
   readonly tags: string[]
   readonly liveUrl?: string
   readonly githubUrl?: string
   readonly image?: string
+  /** Logo exibido no mockup de celular (projetos mobile). */
+  readonly logo?: string
+  readonly featured?: boolean
 }
 
 // Screenshots locais gerados por `npm run screenshots` (scripts/capture-screenshots.mjs).
@@ -22,43 +28,44 @@ function sitePreview(slug: string, url: string): string {
 }
 
 function site(slug: string, title: string, url: string, descriptionKey: TranslationKey, tags: string[]): Project {
-  return { slug, title, descriptionKey, tags, liveUrl: url, image: sitePreview(slug, url) }
+  return { slug, title, descriptionKey, categories: ["web"], tags, liveUrl: url, image: sitePreview(slug, url) }
 }
 
-export const tccApp: Project = {
-  slug: "buggo",
-  title: "Buggo",
-  descriptionKey: "buggoDescription",
-  tags: ["Mobile", "Android", "Google Play"],
-  liveUrl: "https://play.google.com/store/apps/details?id=com.buggo.app",
-  image: localScreenshots.has("buggo") ? "/projects/buggo.jpg" : undefined,
-}
-
-export const freelanceProjects: Project[] = [
-  site("caspheon", "Caspheon", "https://caspheon.com", "caspheonDescription", ["Site institucional", "Responsivo", "SEO"]),
-  site("nooncafelounge", "Noon Café Lounge", "https://nooncafelounge.com.br", "noonDescription", ["Gastronomia", "Responsivo", "SEO"]),
-  site("cedrmadeiras", "CEDR Madeiras", "https://cedrmadeiras.com.br", "cedrDescription", ["Site institucional", "Catálogo", "SEO"]),
-  site("h4digital", "H4 Digital", "https://h4digital.com.br", "h4Description", ["Agência", "Responsivo", "SEO"]),
-  site("vfelevadores", "VF Elevadores", "https://vfelevadores.com.br", "vfDescription", ["Site institucional", "Serviços", "SEO"]),
-  site("topcalcados", "Top Calçados Distribuidora", "https://topcalcadosdistribuidora.com.br", "topCalcadosDescription", ["Distribuidora", "Catálogo", "Responsivo"]),
-]
-
-export const personalProjects: Project[] = [
+export const projects: Project[] = [
+  {
+    slug: "buggo",
+    title: "Buggo",
+    descriptionKey: "buggoDescription",
+    categories: ["mobile"],
+    tags: ["Android", "Mobile", "Google Play"],
+    liveUrl: "https://play.google.com/store/apps/details?id=com.buggo.app",
+    logo: "https://play-lh.googleusercontent.com/LCiXfeXcQIU6hU9ftrOpNDKEzAgFATuAzRvZO3odeO1ev0f91bIDSO6F1UISTLl2ndTvZ7XWjL4eLBhqMzlh3g=w240-h480-rw",
+    featured: true,
+  },
   {
     slug: "onsmart",
     title: "OnSmart.AI",
-    descriptionKey: "project2Description",
-    tags: ["React", "CMS", "Excel API", "YouTube API", "AI Agent"],
+    descriptionKey: "onsmartDescription",
+    categories: ["web", "ai"],
+    tags: ["React", "AI Agent", "CMS", "YouTube API"],
     liveUrl: "https://onsmart.ai/",
-    image: "/onsmart.png",
+    image: "/onsmart.webp",
+    featured: true,
   },
+  site("caspheon", "Caspheon", "https://caspheon.com", "caspheonDescription", ["Web Design", "UI/UX", "SEO"]),
+  site("nooncafelounge", "Noon Café Lounge", "https://nooncafelounge.com.br", "noonDescription", ["Web Design", "Responsivo", "SEO"]),
+  site("cedrmadeiras", "CEDR Madeiras", "https://cedrmadeiras.com.br", "cedrDescription", ["Web Design", "Catálogo", "SEO"]),
+  site("h4digital", "H4 Digital", "https://h4digital.com.br", "h4Description", ["Web Design", "Conversão", "SEO"]),
+  site("vfelevadores", "VF Elevadores", "https://vfelevadores.com.br", "vfDescription", ["Web Design", "Responsivo", "SEO"]),
+  site("topcalcados", "Top Calçados", "https://topcalcadosdistribuidora.com.br", "topCalcadosDescription", ["Web Design", "Catálogo", "Responsivo"]),
   {
     slug: "pokedex",
     title: "Pokédex",
-    descriptionKey: "project3Description",
-    tags: ["HTML", "CSS", "JavaScript", "PokéAPI"],
+    descriptionKey: "pokedexDescription",
+    categories: ["web"],
+    tags: ["JavaScript", "PokéAPI", "CSS"],
     liveUrl: "https://feliperogai.github.io/pokedex/",
     githubUrl: "https://github.com/feliperogai/pokedex",
-    image: "/pokédex.png",
+    image: "/pokedex.webp",
   },
 ]

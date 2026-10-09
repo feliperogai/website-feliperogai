@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 import { useLanguageContext } from "../contexts/LanguageContext"
+import { LogoMark } from "../components/logo"
 
 export default function TermsPage() {
   const { t, language } = useLanguageContext()
@@ -13,10 +14,10 @@ export default function TermsPage() {
       {/* Header */}
       <header className="border-b border-border/50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
         <div className="container flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
-            <span className="text-base sm:text-lg font-bold text-foreground">Felipe Rogai</span>
-          </div>
+          <Link href="/" className="flex items-center gap-3">
+            <LogoMark className="h-8 w-8" />
+            <span className="text-base font-semibold tracking-tight sm:text-lg">Felipe Rogai</span>
+          </Link>
           <Link href="/">
             <Button variant="outline" size="sm" className="gap-2 h-9 sm:h-10 px-3 sm:px-4">
               <ArrowLeft className="h-3 w-3 sm:h-4 sm:w-4" />
@@ -32,7 +33,7 @@ export default function TermsPage() {
         <div className="mx-auto max-w-4xl">
           {/* Page Header */}
           <div className="text-center mb-12 sm:mb-16">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter mb-4 sm:mb-6 text-primary animate-bounce-gentle leading-tight">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter mb-4 sm:mb-6 text-primary leading-tight">
               {t("termsOfServiceTitle")}
             </h1>
             <p className="text-center text-muted-foreground mb-8 sm:mb-12 max-w-3xl mx-auto text-sm sm:text-base lg:text-lg px-4">
