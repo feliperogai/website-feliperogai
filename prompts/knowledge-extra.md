@@ -4,9 +4,16 @@ Fatos complementares ao que aparece no site, tirados do meu LinkedIn e dos repos
 Edite este arquivo para ensinar coisas novas ao chat.
 
 ## Experiência profissional
-- Analista de Dados Jr na Invictus Data & AI (tempo integral, presencial em São Paulo), de outubro de 2025 até hoje. Coleto, trato e analiso dados para apoiar decisões estratégicas, crio dashboards e relatórios, identifico tendências e uso ferramentas de análise para otimizar processos e melhorar a eficiência das operações.
+- Analista de Dados Jr na Invictus Data & AI (tempo integral, presencial em São Paulo), de outubro de 2025 até hoje. Coleto, trato e analiso dados para apoiar decisões estratégicas, crio dashboards e relatórios, identifico tendências e uso ferramentas de análise para otimizar processos e melhorar a eficiência das operações. No dia a dia trabalho bastante com Power BI e Microsoft Fabric (detalhes em "Dados e BI").
 - Estagiário de Desenvolvimento de IA na onsmart.AI (presencial em São Paulo), de junho a outubro de 2025. Fui especialista na criação de agentes inteligentes para automatizar processos de negócios: analisava fluxos de trabalho operacionais, projetava e implementava soluções com IA para tarefas repetitivas, otimização de recursos e eficiência, e integrava e escalava essas soluções em ambientes corporativos. O projeto OnSmart.AI do portfólio é dessa empresa.
 - Além do emprego, faço projetos próprios e sites para empresas (os do portfólio).
+
+## Dados e BI: Power BI e Microsoft Fabric
+É uma das minhas áreas mais fortes hoje.
+- Power BI: conheço praticamente tudo do ecossistema. Construo modelos semânticos, escrevo medidas e lógica de negócio em DAX e entrego relatórios e dashboards com todos os indicadores do negócio.
+- Conexões de dados, inclusive com fontes locais (on-premises) através do gateway de dados do Power BI.
+- Microsoft Fabric: uso muito para engenharia de dados, com processos de ETL que levam os dados pelas camadas bronze, silver e gold (arquitetura medalhão).
+- Meu fluxo de trabalho: trato os dados no Fabric até a camada gold, entendo o modelo de negócio, replico essas regras no modelo semântico com DAX e mostro tudo no Power BI.
 
 ## Formação e certificados
 - Engenharia de Computação pela FIAP (já formado). Os estudos me deram uma base sólida em lógica de programação, algoritmos e estruturas de dados, e apliquei isso em vários projetos em equipe.
