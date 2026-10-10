@@ -2,20 +2,15 @@
 
 import { Brain, Code, Database, Cloud, BarChart3 } from "lucide-react"
 import Reveal from "./reveal"
+import { technologies } from "../data/stack"
 
-const technologies = [
-  { category: "AI & Machine Learning", skills: ["Python", "TensorFlow", "PyTorch", "Scikit-learn", "OpenAI API", "LangChain"], icon: Brain },
-  { category: "Frontend", skills: ["React", "Next.js", "TypeScript", "JavaScript", "HTML", "CSS", "Tailwind CSS"], icon: Code },
-  { category: "Backend & Database", skills: ["Node.js", "FastAPI", "PostgreSQL", "MySQL", "MongoDB", "Redis"], icon: Database },
-  { category: "DevOps & Cloud", skills: ["AWS", "Docker", "Git", "CI/CD", "Linux", "Kubernetes"], icon: Cloud },
-  { category: "Data & Analytics", skills: ["Pandas", "NumPy", "Data Analysis", "API Integration", "ETL"], icon: BarChart3 },
-]
+const icons = [Brain, Code, Database, Cloud, BarChart3]
 
 export default function TechStack() {
   return (
     <div className="divide-y divide-border border-y border-border">
       {technologies.map((tech, i) => {
-        const Icon = tech.icon
+        const Icon = icons[i]
         return (
           <Reveal key={tech.category} delay={i * 60}>
             <div className="group grid gap-5 py-7 md:grid-cols-12 md:items-center">
