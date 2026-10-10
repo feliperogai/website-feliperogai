@@ -18,7 +18,7 @@ const TEASER_KEY = 'chat-teaser-dismissed'
 
 function Avatar({ className, online = false }: { className?: string; online?: boolean }) {
   return (
-    <span className={cn('relative inline-flex shrink-0', className)}>
+    <span className={cn('relative flex shrink-0', className)}>
       <span className="block h-full w-full overflow-hidden rounded-full bg-primary">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={AVATAR} alt="Felipe Rogai" className="h-full w-full origin-[50%_42%] scale-[1.8] object-cover" />
@@ -315,7 +315,7 @@ export default function ChatWidget() {
             className="group flex items-center gap-3 rounded-full border border-border bg-card/90 p-1.5 shadow-2xl shadow-black/40 backdrop-blur transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/60 sm:pr-5"
             aria-label={t('chatOpenButton')}
           >
-            <span className="relative">
+            <span className="relative flex h-12 w-12 shrink-0">
               <span className="absolute inset-0 animate-ping rounded-full bg-primary/40 [animation-duration:2.5s]" />
               <Avatar className="relative h-12 w-12" online />
             </span>
