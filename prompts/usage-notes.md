@@ -5,7 +5,8 @@
   2. a base de conhecimento gerada por `app/api/chat/knowledge.ts`, a partir dos mesmos dados do site
      (`app/data/projects.ts`, `app/data/stack.ts`, `app/data/profile.ts` e os textos em português de `app/i18n/translations.ts`).
 - Para a IA "saber" algo novo, atualize os dados do site; o chat acompanha automaticamente.
-- Fatos que não aparecem no site (ex.: observações sobre o TCC) ficam em `knowledge.ts`.
+- Fatos que não aparecem no site ficam em `prompts/knowledge-extra.md` (formação, tecnologias extras, outros projetos). Edite esse arquivo para ensinar coisas novas ao chat, como experiências do LinkedIn.
+- Observações sobre o que mencionar ou não (TCC, freelas) ficam em `knowledge.ts`.
 - As respostas chegam em streaming (texto puro) e o widget (`app/components/chat-widget.tsx`) renderiza
   formatação leve com `app/components/chat-markdown.tsx`.
 - Variáveis de ambiente: `DEEPSEEK_API_KEY` (obrigatória) e `DEEPSEEK_BASE_URL` (opcional).
