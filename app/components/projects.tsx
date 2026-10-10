@@ -59,7 +59,7 @@ function BrowserMedia({ project }: { project: Project }) {
           fallback={
             <div className="relative flex h-full w-full items-center justify-center bg-gradient-to-br from-primary/25 via-card to-card">
               <div className="bg-grid absolute inset-0" />
-              <span className="relative px-6 text-center font-serif text-4xl italic">{project.title}</span>
+              <span className="relative px-6 text-center text-3xl font-semibold tracking-tight">{project.title}</span>
             </div>
           }
         />
@@ -161,7 +161,7 @@ function NextProjectTile() {
       <div>
         <p className="font-mono text-xs uppercase tracking-widest text-primary">{t("nextProjectLabel")}</p>
         <h3 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">
-          {t("nextProjectTitle")} <span className="font-serif font-normal italic text-primary">{t("nextProjectEmphasis")}</span>
+          {t("nextProjectTitle")} <span className="text-primary">{t("nextProjectEmphasis")}</span>
         </h3>
         <p className="mt-3 max-w-md text-sm text-muted-foreground">{t("nextProjectDescription")}</p>
       </div>
@@ -181,7 +181,7 @@ export default function Projects() {
         <Reveal>
           <p className="eyebrow">02 — {t("projects")}</p>
           <h2 className="mt-5 max-w-2xl text-4xl font-semibold leading-[1] tracking-[-0.035em] sm:text-6xl">
-            {t("workTitle")} <span className="font-serif font-normal italic text-primary">{t("workTitleEmphasis")}</span>
+            {t("workTitle")} <span className="text-primary">{t("workTitleEmphasis")}</span>
           </h2>
           <p className="mt-5 max-w-xl text-muted-foreground">{t("workSubtitle")}</p>
         </Reveal>

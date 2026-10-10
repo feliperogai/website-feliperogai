@@ -22,7 +22,7 @@ function SectionHeading({ index, label, title, emphasis }: { index: string; labe
         {index} — {label}
       </p>
       <h2 className="mt-5 max-w-3xl text-4xl font-semibold leading-[1] tracking-[-0.035em] sm:text-6xl">
-        {title} <span className="font-serif font-normal italic text-primary">{emphasis}</span>
+        {title} <span className="text-primary">{emphasis}</span>
       </h2>
     </Reveal>
   )
@@ -174,7 +174,7 @@ function Contact() {
             <h2 className="mt-5 text-5xl font-semibold leading-[0.95] tracking-[-0.04em] sm:text-7xl">
               {t("contactTitle")}
               <br />
-              <span className="font-serif font-normal italic text-primary">{t("contactTitleEmphasis")}</span>
+              <span className="text-primary">{t("contactTitleEmphasis")}</span>
             </h2>
             <p className="mt-6 max-w-md text-muted-foreground sm:text-lg">{t("contactSubtitle")}</p>
           </Reveal>

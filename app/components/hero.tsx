@@ -63,7 +63,7 @@ export default function Hero() {
 
           <h1 className="text-[2.75rem] font-semibold leading-[0.95] tracking-[-0.04em] sm:text-6xl lg:text-7xl xl:text-[5.4rem]">
             {t("heroTitleA")}{" "}
-            <span className="font-serif font-normal italic tracking-[-0.02em] text-primary">{t("heroTitleEmphasis")}</span>{" "}
+            <span className="text-primary">{t("heroTitleEmphasis")}</span>{" "}
             {t("heroTitleB")}
           </h1>
 
