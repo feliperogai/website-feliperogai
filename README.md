@@ -45,7 +45,7 @@ npm run screenshots   # salva em public/projects/ e atualiza app/data/screenshot
 
 ## Identidade visual
 - Paleta: tinta `#0B0B0E`, papel `#F4F1EA` e laranja sinal `#FF5B1F`
-- Tipografia: Inter (texto), Instrument Serif itálico (destaques) e JetBrains Mono (rótulos), servidas localmente via Fontsource
+- Tipografia: Inter (texto e títulos, com destaques em laranja) e JetBrains Mono (rótulos), servidas localmente via Fontsource
 - Logo/favicon: monograma "fr" com cursor de terminal (`app/icon.svg`), também usado em `app/components/logo.tsx`
 
 ## Estrutura
