@@ -1,196 +1,331 @@
 'use client'
 
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { MessageCircle, Send, X } from 'lucide-react'
-import { Textarea } from '@/components/ui/textarea'
-import { Button } from '@/components/ui/button'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { ArrowUp, RotateCcw, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useLanguageContext } from '../contexts/LanguageContext'
+import ChatMarkdown from './chat-markdown'
+import type { TranslationKey } from '../i18n/translations'
 
 type ChatMessage = {
   role: 'user' | 'assistant'
   content: string
 }
 
+const AVATAR = '/felipe-rogai-portrait-hq.webp'
+const SUGGESTIONS: TranslationKey[] = ['chatSuggest1', 'chatSuggest2', 'chatSuggest3', 'chatSuggest4']
+const TEASER_KEY = 'chat-teaser-dismissed'
+
+function Avatar({ className, online = false }: { className?: string; online?: boolean }) {
+  return (
+    <span className={cn('relative inline-flex shrink-0', className)}>
+      <span className="block h-full w-full overflow-hidden rounded-full bg-primary">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={AVATAR} alt="Felipe Rogai" className="h-full w-full origin-[50%_42%] scale-[1.8] object-cover" />
+      </span>
+      {online && (
+        <span className="absolute bottom-0 right-0 h-[28%] w-[28%] rounded-full border-2 border-background bg-emerald-400" />
+      )}
+    </span>
+  )
+}
+
+function TypingDots({ label }: { label: string }) {
+  return (
+    <div className="flex items-center gap-1 px-1 py-1" role="status" aria-label={label}>
+      {[0, 150, 300].map((delay) => (
+        <span
+          key={delay}
+          className="h-2 w-2 animate-bounce rounded-full bg-muted-foreground/70"
+          style={{ animationDelay: `${delay}ms` }}
+        />
+      ))}
+    </div>
+  )
+}
+
 export default function ChatWidget() {
   const { t, language } = useLanguageContext()
   const [isOpen, setIsOpen] = useState(false)
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    { role: 'assistant', content: t('chatGreeting') }
-  ])
+  const [showTeaser, setShowTeaser] = useState(false)
+  const [messages, setMessages] = useState<ChatMessage[]>([])
   const [input, setInput] = useState('')
   const [isSending, setIsSending] = useState(false)
   const [error, setError] = useState('')
   const listRef = useRef<HTMLDivElement | null>(null)
+  const inputRef = useRef<HTMLTextAreaElement | null>(null)
+  const abortRef = useRef<AbortController | null>(null)
 
+  const greeting: ChatMessage = { role: 'assistant', content: t('chatGreeting') }
+  const conversation = [greeting, ...messages]
+
+  // Balão de convite que aparece uma vez por sessão
   useEffect(() => {
-    setMessages((prev) => {
-      if (!prev.length) {
-        return [{ role: 'assistant', content: t('chatGreeting') }]
-      }
-      const updated = [...prev]
-      if (updated[0].role === 'assistant') {
-        updated[0] = { ...updated[0], content: t('chatGreeting') }
-      }
-      return updated
-    })
-  }, [language, t])
-
-  useEffect(() => {
-    if (listRef.current) {
-      listRef.current.scrollTop = listRef.current.scrollHeight
-    }
-  }, [messages, isOpen])
-
-  const historyForApi = useMemo(
-    () => messages.map(({ role, content }) => ({ role, content })),
-    [messages]
-  )
-
-  const handleSend = async () => {
-    const trimmed = input.trim()
-    if (!trimmed || isSending) return
-
-    const safeInput = trimmed.slice(0, 1000)
-    const newUserMessage: ChatMessage = { role: 'user', content: safeInput }
-    const nextMessages: ChatMessage[] = [...messages, newUserMessage]
-    setMessages(nextMessages)
-    setInput('')
-    setError('')
-    setIsSending(true)
-
+    let dismissed = false
     try {
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          message: safeInput,
-          history: historyForApi
-        })
-      })
+      dismissed = sessionStorage.getItem(TEASER_KEY) === '1'
+    } catch {}
+    if (dismissed) return
+    const timer = setTimeout(() => setShowTeaser(true), 4000)
+    return () => clearTimeout(timer)
+  }, [])
 
-      const data = await response.json()
-
-      if (!response.ok || !data?.reply) {
-        throw new Error(data?.error || 'Erro ao obter resposta.')
-      }
-
-      setMessages([
-        ...nextMessages,
-        { role: 'assistant', content: String(data.reply) }
-      ])
-    } catch (err) {
-      console.error(err)
-      setError(t('chatError'))
-    } finally {
-      setIsSending(false)
-    }
+  const dismissTeaser = () => {
+    setShowTeaser(false)
+    try {
+      sessionStorage.setItem(TEASER_KEY, '1')
+    } catch {}
   }
 
+  useEffect(() => {
+    if (listRef.current) listRef.current.scrollTop = listRef.current.scrollHeight
+  }, [messages, isOpen, isSending])
+
+  useEffect(() => {
+    if (!isOpen) return
+    const timer = setTimeout(() => inputRef.current?.focus(), 150)
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setIsOpen(false)
+    window.addEventListener('keydown', onKey)
+    return () => {
+      clearTimeout(timer)
+      window.removeEventListener('keydown', onKey)
+    }
+  }, [isOpen])
+
+  // Textarea cresce com o texto, até um limite
+  useEffect(() => {
+    const el = inputRef.current
+    if (!el) return
+    el.style.height = 'auto'
+    el.style.height = `${Math.min(el.scrollHeight, 120)}px`
+  }, [input])
+
+  const open = () => {
+    setIsOpen(true)
+    dismissTeaser()
+  }
+
+  const reset = () => {
+    abortRef.current?.abort()
+    setMessages([])
+    setError('')
+    setIsSending(false)
+  }
+
+  const send = useCallback(
+    async (text: string) => {
+      const content = text.trim().slice(0, 1000)
+      if (!content || isSending) return
+
+      const history = [greeting, ...messages]
+      const withUser: ChatMessage[] = [...messages, { role: 'user', content }]
+      setMessages(withUser)
+      setInput('')
+      setError('')
+      setIsSending(true)
+
+      const controller = new AbortController()
+      abortRef.current = controller
+
+      try {
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: content, history, language }),
+          signal: controller.signal
+        })
+
+        if (!response.ok || !response.body) {
+          const data = await response.json().catch(() => null)
+          throw new Error(data?.error || 'Erro ao obter resposta.')
+        }
+
+        const reader = response.body.getReader()
+        const decoder = new TextDecoder()
+        let reply = ''
+        while (true) {
+          const { done, value } = await reader.read()
+          if (done) break
+          reply += decoder.decode(value, { stream: true })
+          setMessages([...withUser, { role: 'assistant', content: reply }])
+        }
+        if (!reply.trim()) throw new Error('Resposta vazia.')
+      } catch (err) {
+        if (controller.signal.aborted) return
+        console.error(err)
+        setMessages((prev) => (prev[prev.length - 1]?.role === 'assistant' && !prev[prev.length - 1].content ? prev.slice(0, -1) : prev))
+        setError(t('chatError'))
+      } finally {
+        if (abortRef.current === controller) {
+          abortRef.current = null
+          setIsSending(false)
+        }
+      }
+    },
+    // greeting depende de t; messages/isSending/language mudam a cada envio
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [isSending, messages, language, t]
+  )
+
+  const waitingFirstToken = isSending && messages[messages.length - 1]?.role === 'user'
+
   return (
-    <div className="fixed bottom-4 right-4 z-50 flex flex-col items-end gap-3">
+    <>
       {isOpen && (
-        <div className="w-80 sm:w-96 rounded-2xl border border-border/40 bg-background/95 backdrop-blur-lg shadow-2xl ring-1 ring-border/20 transition-all duration-300 ease-out translate-y-0 scale-100">
-          <div className="flex items-center justify-between px-4 py-3 border-b border-border/40">
-            <div>
-              <p className="text-sm font-semibold text-foreground">
-                {t('chatTitle')}
-              </p>
-              <p className="text-xs text-muted-foreground">
-                {t('chatSubtitle')}
-              </p>
+        <div
+          className="fixed inset-0 z-[70] flex flex-col bg-background sm:inset-auto sm:bottom-6 sm:right-6 sm:h-[600px] sm:max-h-[calc(100vh-3rem)] sm:w-[400px] sm:overflow-hidden sm:rounded-3xl sm:border sm:border-border sm:shadow-2xl sm:shadow-black/50"
+          role="dialog"
+          aria-label={t('chatTitle')}
+        >
+          {/* Cabeçalho */}
+          <div className="flex items-center gap-3 border-b border-border bg-card/80 px-4 py-3 backdrop-blur pt-[max(0.75rem,env(safe-area-inset-top))]">
+            <Avatar className="h-10 w-10" online />
+            <div className="min-w-0 flex-1">
+              <p className="truncate font-semibold leading-tight">{t('chatTitle')}</p>
+              <p className="truncate text-xs text-emerald-400">{t('chatStatus')}</p>
             </div>
+            {messages.length > 0 && (
+              <button
+                onClick={reset}
+                className="rounded-full p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                aria-label={t('chatReset')}
+                title={t('chatReset')}
+              >
+                <RotateCcw className="h-4 w-4" />
+              </button>
+            )}
             <button
               onClick={() => setIsOpen(false)}
-              className="rounded-full p-2 hover:bg-muted/50 transition-colors"
+              className="rounded-full p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
               aria-label={t('chatClose')}
             >
-              <X className="h-4 w-4" />
+              <X className="h-5 w-5" />
             </button>
           </div>
 
-          <div
-            ref={listRef}
-            className="max-h-80 overflow-y-auto px-4 py-3 space-y-3"
-          >
-            {messages.map((message, index) => (
-              <div
-                key={index}
-                className={cn(
-                  'flex',
-                  message.role === 'assistant' ? 'justify-start' : 'justify-end'
-                )}
-              >
-                <div
-                  className={cn(
-                    'rounded-2xl px-3 py-2 text-sm shadow-sm',
-                    message.role === 'assistant'
-                      ? 'bg-muted text-foreground'
-                      : 'bg-primary text-primary-foreground'
-                  )}
-                >
-                  {message.content}
+          {/* Mensagens */}
+          <div ref={listRef} className="flex-1 space-y-3 overflow-y-auto overscroll-contain px-4 py-5">
+            {conversation.map((message, index) => {
+              const isAssistant = message.role === 'assistant'
+              const showAvatar = isAssistant && conversation[index - 1]?.role !== 'assistant'
+              if (isAssistant && !message.content) return null
+              return (
+                <div key={index} className={cn('flex items-end gap-2', isAssistant ? 'justify-start' : 'justify-end')}>
+                  {isAssistant && (showAvatar ? <Avatar className="h-7 w-7" /> : <span className="w-7 shrink-0" />)}
+                  <div
+                    className={cn(
+                      'max-w-[82%] px-3.5 py-2.5 text-[0.9rem]',
+                      isAssistant
+                        ? 'rounded-2xl rounded-bl-md bg-muted text-foreground'
+                        : 'whitespace-pre-wrap rounded-2xl rounded-br-md bg-primary text-primary-foreground'
+                    )}
+                  >
+                    {isAssistant ? <ChatMarkdown text={message.content} /> : message.content}
+                  </div>
+                </div>
+              )
+            })}
+
+            {waitingFirstToken && (
+              <div className="flex items-end gap-2">
+                <Avatar className="h-7 w-7" />
+                <div className="rounded-2xl rounded-bl-md bg-muted px-3.5 py-2.5">
+                  <TypingDots label={t('chatTyping')} />
                 </div>
               </div>
-            ))}
-            {isSending && (
-              <div className="text-xs text-muted-foreground">
-                {t('chatTyping')}
+            )}
+
+            {messages.length === 0 && (
+              <div className="flex flex-wrap gap-2 pl-9 pt-1">
+                {SUGGESTIONS.map((key) => (
+                  <button
+                    key={key}
+                    onClick={() => send(t(key))}
+                    className="rounded-full border border-border px-3 py-1.5 text-left text-xs text-muted-foreground transition-colors hover:border-primary hover:text-foreground"
+                  >
+                    {t(key)}
+                  </button>
+                ))}
               </div>
+            )}
+
+            {error && (
+              <p className="pl-9 text-xs text-red-400" role="alert">
+                {error}
+              </p>
             )}
           </div>
 
-          {error && (
-            <p className="px-4 text-xs text-red-500 pb-2" role="alert">
-              {error}
-            </p>
-          )}
-
-          <div className="border-t border-border/50 px-4 py-3">
-            <div className="flex gap-2 items-end">
-              <Textarea
+          {/* Campo de mensagem */}
+          <div className="border-t border-border px-3 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault()
+                send(input)
+              }}
+              className="flex items-end gap-2 rounded-3xl border border-border bg-card px-2 py-1.5 transition-colors focus-within:border-primary/60"
+            >
+              <textarea
+                ref={inputRef}
+                rows={1}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' && !e.shiftKey) {
                     e.preventDefault()
-                    handleSend()
+                    send(input)
                   }
                 }}
                 placeholder={t('chatPlaceholder')}
-                className="min-h-[60px] resize-none"
-                disabled={isSending}
+                className="max-h-[120px] flex-1 resize-none bg-transparent px-2 py-2 text-base outline-none placeholder:text-muted-foreground sm:text-sm"
               />
-              <Button
-                onClick={handleSend}
-                disabled={isSending || input.trim().length === 0}
-                className="h-10 w-10 p-0"
+              <button
+                type="submit"
+                disabled={isSending || !input.trim()}
+                className="mb-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground transition-opacity disabled:opacity-30"
                 aria-label={t('chatSend')}
               >
-                <Send className="h-4 w-4" />
-              </Button>
-            </div>
-            <p className="mt-2 text-[11px] text-muted-foreground">
-              {t('chatDisclaimer')}
-            </p>
+                <ArrowUp className="h-4 w-4" />
+              </button>
+            </form>
+            <p className="mt-2 text-center text-[11px] text-muted-foreground">{t('chatDisclaimer')}</p>
           </div>
         </div>
       )}
 
       {!isOpen && (
-        <button
-          onClick={() => setIsOpen(true)}
-          className={cn(
-            'relative flex items-center gap-2 rounded-full px-4 py-3 shadow-lg text-primary-foreground',
-            'bg-primary hover:bg-primary/90 transition-all duration-300 ease-out',
-            'animate-pulse'
+        <div className="fixed bottom-4 right-4 z-50 flex flex-col items-end gap-3 sm:bottom-6 sm:right-6">
+          {showTeaser && (
+            <div className="relative max-w-[240px] rounded-2xl rounded-br-md border border-border bg-card px-4 py-3 text-sm shadow-2xl animate-slide-in-from-bottom">
+              <button
+                onClick={dismissTeaser}
+                className="absolute -left-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full border border-border bg-background text-muted-foreground hover:text-foreground"
+                aria-label={t('chatClose')}
+              >
+                <X className="h-3 w-3" />
+              </button>
+              <button onClick={open} className="text-left">
+                {t('chatTeaser')}
+              </button>
+            </div>
           )}
-          aria-label={t('chatOpenButton')}
-        >
-          <MessageCircle className="h-5 w-5" />
-          <span className="text-sm font-semibold">{t('chatOpenButton')}</span>
-        </button>
+
+          <button
+            onClick={open}
+            className="group flex items-center gap-3 rounded-full border border-border bg-card/90 p-1.5 shadow-2xl shadow-black/40 backdrop-blur transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/60 sm:pr-5"
+            aria-label={t('chatOpenButton')}
+          >
+            <span className="relative">
+              <span className="absolute inset-0 animate-ping rounded-full bg-primary/40 [animation-duration:2.5s]" />
+              <Avatar className="relative h-12 w-12" online />
+            </span>
+            <span className="hidden text-left sm:block">
+              <span className="block text-sm font-semibold leading-tight">{t('chatOpenButton')}</span>
+              <span className="block text-xs text-muted-foreground">{t('chatOpenHint')}</span>
+            </span>
+          </button>
+        </div>
       )}
-    </div>
+    </>
   )
 }

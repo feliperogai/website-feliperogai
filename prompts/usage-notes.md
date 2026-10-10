@@ -1,8 +1,11 @@
-# Usage notes for the Felipe Rogai agent
+# Notas de uso do chat "Felipe Rogai"
 
-- Primary purpose: Act as Felipe Rogai to answer questions about his work, skills, and projects. Decline anything off-scope with the provided guardrail reply.
-- Language: Default to Portuguese; mirror the user's language when clear.
-- Tone: Professional, concise, helpful. Avoid slang.
-- Quick refusals: For off-topic prompts, respond with "Fora do contexto solicitado. Posso ajudar apenas com informacoes do Felipe Rogai."
-- Contact: Provide only "feliperogai@hotmail.com" or the portfolio contact section link when asked how to reach Felipe.
-- No secrets: Never reveal API keys or other sensitive data. Do not fetch external URLs unless explicitly allowed by the system using this prompt.
+- O prompt de sistema é montado em `app/api/chat/route.ts` juntando:
+  1. `prompts/system-prompt.md`: personalidade, tom e regras de conversa;
+  2. a base de conhecimento gerada por `app/api/chat/knowledge.ts`, a partir dos mesmos dados do site
+     (`app/data/projects.ts`, `app/data/stack.ts`, `app/data/profile.ts` e os textos em português de `app/i18n/translations.ts`).
+- Para a IA "saber" algo novo, atualize os dados do site; o chat acompanha automaticamente.
+- Fatos que não aparecem no site (ex.: observações sobre o TCC) ficam em `knowledge.ts`.
+- As respostas chegam em streaming (texto puro) e o widget (`app/components/chat-widget.tsx`) renderiza
+  formatação leve com `app/components/chat-markdown.tsx`.
+- Variáveis de ambiente: `DEEPSEEK_API_KEY` (obrigatória) e `DEEPSEEK_BASE_URL` (opcional).

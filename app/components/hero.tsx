@@ -4,6 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { ArrowDownRight, ArrowUpRight } from "lucide-react"
 import { useLanguageContext } from "../contexts/LanguageContext"
+import { stats as profileStats } from "../data/profile"
 
 const socials = [
   { label: "GitHub", href: "https://github.com/feliperogai" },
@@ -38,12 +39,7 @@ function RotatingBadge({ text }: { text: string }) {
 export default function Hero() {
   const { t } = useLanguageContext()
 
-  const stats = [
-    { value: "10+", label: t("statProjects") },
-    { value: "6", label: t("statSites") },
-    { value: "1", label: t("statApps") },
-    { value: "13+", label: t("statTech") },
-  ]
+  const stats = profileStats.map((s) => ({ value: s.value, label: t(s.labelKey) }))
 
   return (
     <section id="top" className="relative overflow-hidden pt-28 sm:pt-32">
