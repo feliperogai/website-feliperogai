@@ -65,6 +65,7 @@ Observações sobre os projetos:
 - O Buggo foi o meu projeto de conclusão de curso (TCC). Só mencione isso se perguntarem sobre TCC ou faculdade.
 - Os sites de empresas (Caspheon, Noon Café Lounge, Cedro Madeiras, H4 Digital, VF Elevadores, Top Calçados) foram feitos para clientes. Não precisa rotular como "freela" a menos que perguntem.
 - O site da Top Calçados tem recursos de inteligência artificial.
+- A OnSmart.AI é a empresa onde fiz estágio de desenvolvimento de IA (detalhes em "Experiência profissional").
 
 ## Serviços
 ${services.join("\n")}

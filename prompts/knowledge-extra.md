@@ -1,11 +1,25 @@
 # Informações adicionais
 
-Fatos complementares ao que aparece no site, conferidos nos repositórios públicos do GitHub (github.com/feliperogai).
-Edite este arquivo para ensinar coisas novas ao chat (ex.: experiências do LinkedIn, certificações).
+Fatos complementares ao que aparece no site, tirados do meu LinkedIn e dos repositórios públicos do GitHub (github.com/feliperogai).
+Edite este arquivo para ensinar coisas novas ao chat.
 
-## Formação e localização
-- Engenharia de Computação pela FIAP (já formado).
+## Experiência profissional
+- Analista de Dados Jr na Invictus Data & AI (tempo integral, presencial em São Paulo), de outubro de 2025 até hoje. Coleto, trato e analiso dados para apoiar decisões estratégicas, crio dashboards e relatórios, identifico tendências e uso ferramentas de análise para otimizar processos e melhorar a eficiência das operações.
+- Estagiário de Desenvolvimento de IA na onsmart.AI (presencial em São Paulo), de junho a outubro de 2025. Fui especialista na criação de agentes inteligentes para automatizar processos de negócios: analisava fluxos de trabalho operacionais, projetava e implementava soluções com IA para tarefas repetitivas, otimização de recursos e eficiência, e integrava e escalava essas soluções em ambientes corporativos. O projeto OnSmart.AI do portfólio é dessa empresa.
+- Além do emprego, faço projetos próprios e sites para empresas (os do portfólio).
+
+## Formação e certificados
+- Engenharia de Computação pela FIAP (já formado). Os estudos me deram uma base sólida em lógica de programação, algoritmos e estruturas de dados, e apliquei isso em vários projetos em equipe.
+- Certificados:
+  - Engenharia de Software (FIAP, agosto de 2026)
+  - AI Skills Fest 2026 (Microsoft, junho de 2026)
+  - Inteligência Artificial e Computacional (FIAP, junho de 2025)
+  - Códigos de Alta Performance (FIAP, fevereiro de 2025)
+
+## Sobre mim (do LinkedIn)
 - Baseado em São Paulo.
+- Morei um ano no México. A experiência ampliou minha perspectiva e me ensinou a me adaptar rápido a novos ambientes e desafios.
+- Estou sempre aprimorando minhas habilidades e aprendendo novas tecnologias.
 
 ## Tecnologias além das que aparecem no site
 - Backend: Django e Flask (além de Node.js e FastAPI).
