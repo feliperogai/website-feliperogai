@@ -1,7 +1,18 @@
+import fs from "fs"
+import path from "path"
 import { projects } from "../../data/projects"
 import { technologies } from "../../data/stack"
 import { contact, stats } from "../../data/profile"
 import { translations, type Language, type TranslationKey } from "../../i18n/translations"
+
+// Fatos complementares editáveis à mão (ex.: experiências do LinkedIn), fora dos dados do site
+const extraKnowledge = (() => {
+  try {
+    return fs.readFileSync(path.join(process.cwd(), "prompts", "knowledge-extra.md"), "utf-8")
+  } catch {
+    return ""
+  }
+})()
 
 const languageNames: Record<Language, string> = { pt: "português", en: "inglês", es: "espanhol" }
 const categoryNames = { web: "Web", mobile: "Mobile", ai: "IA" } as const
@@ -70,5 +81,6 @@ ${technologies.map((g) => `- ${g.category}: ${g.skills.join(", ")}`).join("\n")}
 - LinkedIn: ${contact.linkedin}
 - GitHub: ${contact.github}
 - Instagram: ${contact.instagram}
-`
+
+${extraKnowledge}`
 }
