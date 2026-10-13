@@ -17,6 +17,9 @@ const SUGGESTIONS: TranslationKey[] = ['chatSuggest1', 'chatSuggest2', 'chatSugg
 const TEASER_KEY = 'chat-teaser-dismissed'
 // Sem novas mensagens por esse tempo, a conversa é considerada encerrada e o resumo vai por e-mail
 const SUMMARY_IDLE_MS = 3 * 60_000
+// Tempo mínimo com o "digitando..." antes da resposta aparecer, para parecer uma pessoa
+const TYPING_MIN_MS = 800
+const TYPING_MAX_MS = 1500
 
 function Avatar({ className, online = false }: { className?: string; online?: boolean }) {
   return (
@@ -60,8 +63,6 @@ export default function ChatWidget() {
   const messagesRef = useRef<ChatMessage[]>([])
   const summarizedCountRef = useRef(0)
 
-  const greeting: ChatMessage = { role: 'assistant', content: t('chatGreeting') }
-  const conversation = [greeting, ...messages]
 
   // Balão de convite que aparece uma vez por sessão
   useEffect(() => {
@@ -171,7 +172,7 @@ export default function ChatWidget() {
       const content = text.trim().slice(0, 1000)
       if (!content || isSending) return
 
-      const history = [greeting, ...messages]
+      const history = messages
       const withUser: ChatMessage[] = [...messages, { role: 'user', content }]
       setMessages(withUser)
       setInput('')
@@ -180,6 +181,7 @@ export default function ChatWidget() {
 
       const controller = new AbortController()
       abortRef.current = controller
+      const typingUntil = Date.now() + TYPING_MIN_MS + Math.random() * (TYPING_MAX_MS - TYPING_MIN_MS)
 
       try {
         const response = await fetch('/api/chat', {
@@ -197,10 +199,16 @@ export default function ChatWidget() {
         const reader = response.body.getReader()
         const decoder = new TextDecoder()
         let reply = ''
+        let typingDone = false
         while (true) {
           const { done, value } = await reader.read()
           if (done) break
           reply += decoder.decode(value, { stream: true })
+          // Segura o "digitando..." até o tempo mínimo; se a IA demorar mais, não espera nada extra
+          if (!typingDone) {
+            await new Promise((resolve) => setTimeout(resolve, Math.max(0, typingUntil - Date.now())))
+            typingDone = true
+          }
           setMessages([...withUser, { role: 'assistant', content: reply }])
         }
         if (!reply.trim()) throw new Error('Resposta vazia.')
@@ -216,8 +224,6 @@ export default function ChatWidget() {
         }
       }
     },
-    // greeting depende de t; messages/isSending/language mudam a cada envio
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [isSending, messages, language, t]
   )
 
@@ -236,7 +242,7 @@ export default function ChatWidget() {
             <Avatar className="h-10 w-10" online />
             <div className="min-w-0 flex-1">
               <p className="truncate font-semibold leading-tight">{t('chatTitle')}</p>
-              <p className="truncate text-xs text-emerald-400">{t('chatStatus')}</p>
+              <p className="truncate text-xs text-emerald-400">{waitingFirstToken ? t('chatTyping') : t('chatStatus')}</p>
             </div>
             {messages.length > 0 && (
               <button
@@ -259,9 +265,9 @@ export default function ChatWidget() {
 
           {/* Mensagens */}
           <div ref={listRef} className="flex-1 space-y-3 overflow-y-auto overscroll-contain px-4 py-5">
-            {conversation.map((message, index) => {
+            {messages.map((message, index) => {
               const isAssistant = message.role === 'assistant'
-              const showAvatar = isAssistant && conversation[index - 1]?.role !== 'assistant'
+              const showAvatar = isAssistant && messages[index - 1]?.role !== 'assistant'
               if (isAssistant && !message.content) return null
               return (
                 <div key={index} className={cn('flex items-end gap-2', isAssistant ? 'justify-start' : 'justify-end')}>
@@ -289,8 +295,9 @@ export default function ChatWidget() {
               </div>
             )}
 
+            {/* Chat começa vazio: o visitante manda a primeira mensagem (ou toca numa sugestão) */}
             {messages.length === 0 && (
-              <div className="flex flex-wrap gap-2 pl-9 pt-1">
+              <div className="flex h-full flex-wrap content-end justify-end gap-2">
                 {SUGGESTIONS.map((key) => (
                   <button
                     key={key}
@@ -304,7 +311,7 @@ export default function ChatWidget() {
             )}
 
             {error && (
-              <p className="pl-9 text-xs text-red-400" role="alert">
+              <p className="text-xs text-red-400" role="alert">
                 {error}
               </p>
             )}
