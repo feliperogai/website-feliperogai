@@ -26,7 +26,21 @@ function renderInline(text: string, keyPrefix: string): ReactNode[] {
   })
 }
 
-export default function ChatMarkdown({ text }: { text: string }) {
+/**
+ * Garante o tom de conversa mesmo se o modelo escapar das regras do prompt:
+ * troca travessões por vírgula, quebra a linha onde havia ponto entre frases e tira
+ * o ponto final do fim das frases (sem mexer em reticências, números ou links).
+ * Sem lookbehind para não quebrar em Safari antigo.
+ */
+function casualize(text: string) {
+  return text
+    .replace(/\s*[—–]\s*/g, ", ")
+    .replace(/([^.\d\s])\. +(?=[A-ZÀ-Ý])/g, "$1\n")
+    .replace(/([^.\d])\.([ \t]*)(?=\n|$)/g, "$1$2")
+}
+
+export default function ChatMarkdown({ text: raw }: { text: string }) {
+  const text = casualize(raw)
   const blocks: ReactNode[] = []
   let list: { ordered: boolean; items: string[] } | null = null
   let paragraph: string[] = []

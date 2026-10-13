@@ -16,10 +16,10 @@ Escreva um resumo curto em português para o Felipe ler no e-mail. Use texto sim
 Resumo: 2 ou 3 frases sobre o que foi conversado.
 O que o visitante queria: 1 frase.
 Assuntos para estudar: temas que o assistente disse que o Felipe ainda não domina, separados por vírgula. Se não houver, escreva "Nenhum".
-Contato do visitante: nome, e-mail, empresa ou telefone, se ele informou. Se não, escreva "Não informado".
+Contato do visitante: nome, e-mail, empresa ou telefone que ele informou. Se não informou nada, escreva "Não informado".
 Próximo passo sugerido: 1 frase.
 
-Não invente nada que não esteja na conversa.`
+Não invente nada que não esteja na conversa. Não use travessão nem parênteses.`
 
 // Limite simples por IP para evitar spam no e-mail (melhor esforço, por instância)
 const hits = new Map<string, number[]>()
@@ -89,7 +89,6 @@ export async function POST(req: Request) {
 
   // Se o visitante deixou um e-mail na conversa, ele vira o "responder para" do Formspree
   const visitorEmail = userMessages.map((m) => m.content.match(/[\w.+-]+@[\w-]+\.[\w.-]+/)?.[0]).find(Boolean)
-  const language = typeof body?.language === 'string' ? body.language.slice(0, 5) : 'pt'
   const firstQuestion = userMessages[0].content.replace(/\s+/g, ' ').slice(0, 60)
 
   try {
@@ -100,7 +99,7 @@ export async function POST(req: Request) {
         _subject: `Conversa no chat do portfólio: ${firstQuestion}`,
         name: 'Chat do portfólio (IA)',
         ...(visitorEmail ? { email: visitorEmail } : {}),
-        message: `${summary}\n\n\nConversa completa (${messages.length} mensagens, idioma: ${language}):\n\n${transcript}`
+        message: summary
       }),
       cache: 'no-store'
     })
