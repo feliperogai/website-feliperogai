@@ -10,3 +10,6 @@
 - As respostas chegam em streaming (texto puro) e o widget (`app/components/chat-widget.tsx`) renderiza
   formatação leve com `app/components/chat-markdown.tsx`.
 - Variáveis de ambiente: `DEEPSEEK_API_KEY` (obrigatória) e `DEEPSEEK_BASE_URL` (opcional).
+- Resumo por e-mail: quando a conversa termina (fechar o chat, nova conversa, sair ou trocar de aba, ou 3 minutos sem mensagens),
+  o widget chama `app/api/chat/summary/route.ts`, que gera um resumo com a DeepSeek e envia pelo Formspree
+  (`formspreeEndpoint` em `app/data/profile.ts`, ou a variável `FORMSPREE_ENDPOINT`). Só envia de novo se houver mensagens novas.

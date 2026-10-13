@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
 import { buildKnowledge } from './knowledge'
+import { DEEPSEEK_URL } from './deepseek'
 import type { Language } from '../../i18n/translations'
 
 export const maxDuration = 30
@@ -11,7 +12,6 @@ type ChatMessage = {
   content: string
 }
 
-const DEEPSEEK_URL = `${process.env.DEEPSEEK_BASE_URL?.trim() || 'https://api.deepseek.com/v1'}/chat/completions`
 const MAX_HISTORY = 20
 const MAX_CHARS = 2000
 
@@ -85,7 +85,7 @@ export async function POST(req: Request) {
         model: 'deepseek-chat',
         messages,
         temperature: 0.7,
-        max_tokens: 700,
+        max_tokens: 300,
         stream: true
       }),
       cache: 'no-store'

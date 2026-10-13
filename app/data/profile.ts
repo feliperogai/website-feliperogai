@@ -14,3 +14,6 @@ export const contact = {
   github: "https://github.com/feliperogai",
   instagram: "https://www.instagram.com/feliperogai/",
 }
+
+/** Formulário do Formspree que entrega no e-mail do Felipe (contato e resumos do chat). */
+export const formspreeEndpoint = "https://formspree.io/f/xblalayv"

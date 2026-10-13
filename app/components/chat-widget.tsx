@@ -15,6 +15,8 @@ type ChatMessage = {
 const AVATAR = '/felipe-rogai-portrait-hq.webp'
 const SUGGESTIONS: TranslationKey[] = ['chatSuggest1', 'chatSuggest2', 'chatSuggest3', 'chatSuggest4']
 const TEASER_KEY = 'chat-teaser-dismissed'
+// Sem novas mensagens por esse tempo, a conversa é considerada encerrada e o resumo vai por e-mail
+const SUMMARY_IDLE_MS = 3 * 60_000
 
 function Avatar({ className, online = false }: { className?: string; online?: boolean }) {
   return (
@@ -55,6 +57,8 @@ export default function ChatWidget() {
   const listRef = useRef<HTMLDivElement | null>(null)
   const inputRef = useRef<HTMLTextAreaElement | null>(null)
   const abortRef = useRef<AbortController | null>(null)
+  const messagesRef = useRef<ChatMessage[]>([])
+  const summarizedCountRef = useRef(0)
 
   const greeting: ChatMessage = { role: 'assistant', content: t('chatGreeting') }
   const conversation = [greeting, ...messages]
@@ -82,15 +86,62 @@ export default function ChatWidget() {
   }, [messages, isOpen, isSending])
 
   useEffect(() => {
+    messagesRef.current = messages
+  }, [messages])
+
+  // Envia ao Felipe (via /api/chat/summary → Formspree) um resumo da conversa,
+  // só se houver mensagens novas desde o último envio
+  const sendSummary = useCallback(() => {
+    const msgs = messagesRef.current.filter((m) => m.content.trim())
+    if (msgs.length <= summarizedCountRef.current) return
+    if (!msgs.some((m) => m.role === 'user') || !msgs.some((m) => m.role === 'assistant')) return
+    summarizedCountRef.current = msgs.length
+    const body = JSON.stringify({
+      messages: msgs.slice(-40).map((m) => ({ role: m.role, content: m.content.slice(0, 1200) })),
+      language
+    })
+    // keepalive deixa o envio terminar mesmo se a pessoa fechar a aba (limite de ~64 KB)
+    fetch('/api/chat/summary', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body,
+      keepalive: body.length < 60_000
+    }).catch(() => {})
+  }, [language])
+
+  // Conversa parada por alguns minutos conta como encerrada
+  useEffect(() => {
+    if (isSending || !messages.some((m) => m.role === 'user')) return
+    const timer = setTimeout(sendSummary, SUMMARY_IDLE_MS)
+    return () => clearTimeout(timer)
+  }, [messages, isSending, sendSummary])
+
+  // Saindo da página ou trocando de aba/app
+  useEffect(() => {
+    const onHide = () => document.visibilityState === 'hidden' && sendSummary()
+    window.addEventListener('pagehide', sendSummary)
+    document.addEventListener('visibilitychange', onHide)
+    return () => {
+      window.removeEventListener('pagehide', sendSummary)
+      document.removeEventListener('visibilitychange', onHide)
+    }
+  }, [sendSummary])
+
+  const close = useCallback(() => {
+    setIsOpen(false)
+    sendSummary()
+  }, [sendSummary])
+
+  useEffect(() => {
     if (!isOpen) return
     const timer = setTimeout(() => inputRef.current?.focus(), 150)
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setIsOpen(false)
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && close()
     window.addEventListener('keydown', onKey)
     return () => {
       clearTimeout(timer)
       window.removeEventListener('keydown', onKey)
     }
-  }, [isOpen])
+  }, [isOpen, close])
 
   // Textarea cresce com o texto, até um limite
   useEffect(() => {
@@ -106,7 +157,10 @@ export default function ChatWidget() {
   }
 
   const reset = () => {
+    sendSummary()
     abortRef.current?.abort()
+    summarizedCountRef.current = 0
+    messagesRef.current = []
     setMessages([])
     setError('')
     setIsSending(false)
@@ -195,7 +249,7 @@ export default function ChatWidget() {
               </button>
             )}
             <button
-              onClick={() => setIsOpen(false)}
+              onClick={close}
               className="rounded-full p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
               aria-label={t('chatClose')}
             >
@@ -277,6 +331,7 @@ export default function ChatWidget() {
                   }
                 }}
                 placeholder={t('chatPlaceholder')}
+                aria-label={t('chatPlaceholder')}
                 className="max-h-[120px] flex-1 resize-none bg-transparent px-2 py-2 text-base outline-none placeholder:text-muted-foreground sm:text-sm"
               />
               <button

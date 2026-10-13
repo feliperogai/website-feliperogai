@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { useState } from "react"
 import { useLanguageContext } from "../contexts/LanguageContext"
+import { formspreeEndpoint } from "../data/profile"
 import { ArrowUpRight, CheckCircle } from "lucide-react"
 
 export default function ContactForm() {
@@ -18,7 +19,7 @@ export default function ContactForm() {
     setError("")
     
     try {
-      const response = await fetch("https://formspree.io/f/xblalayv", {
+      const response = await fetch(formspreeEndpoint, {
         method: "POST",
         body: formData,
         headers: {
