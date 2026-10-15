@@ -18,6 +18,7 @@ const sites = {
   onsmart: "https://onsmart.ai/",
   pokedex: "https://feliperogai.github.io/pokedex/",
   "chorao-eterno": "https://feliperogai.github.io/chorao-eterno/",
+  "enade-simulado": "https://enade-simulado.vercel.app/",
 }
 
 const outDir = join(process.cwd(), "public", "projects")

@@ -65,6 +65,16 @@ export const projects: Project[] = [
     image: sitePreview("chorao-eterno", "https://feliperogai.github.io/chorao-eterno/"),
   },
   {
+    slug: "enade-simulado",
+    title: "Simulado ENADE",
+    descriptionKey: "enadeDescription",
+    categories: ["web"],
+    tags: ["React", "TypeScript", "Python"],
+    liveUrl: "https://enade-simulado.vercel.app/",
+    githubUrl: "https://github.com/feliperogai/enade-simulado",
+    image: sitePreview("enade-simulado", "https://enade-simulado.vercel.app/"),
+  },
+  {
     slug: "onsmart",
     title: "OnSmart.AI",
     descriptionKey: "onsmartDescription",
